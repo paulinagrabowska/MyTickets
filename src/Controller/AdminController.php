@@ -160,6 +160,12 @@ class AdminController extends Controller
      */
     public function deletePerformer(Request $request, Performer $performer, PerformerRepository $repository): Response
     {
+        if ($performer->getConcerts()->count()) {
+            $this->addFlash('warning', 'message.performer_has_concerts');
+
+            return $this->redirectToRoute('performer_show');
+        }
+
         $form = $this->createForm(PerformerType::class, $performer, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
