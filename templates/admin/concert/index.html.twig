@@ -32,8 +32,8 @@
                     <td>{{ concert.date|date('Y/m/d') }}</td>
                     <td>{{ concert.ReservationLimit}}</td>
                     <td>{{ concert.performer.stagename}}</td>
-                    <td><a href="#" class="btn btn-outline-info btn-sm m-2">Edit</a>
-                        <a href="#" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                    <td><a href="{{ url('concert_edit', {id: concert.id}) }}" class="btn btn-outline-info btn-sm m-2">Edit</a>
+                        <a href="{{ url('concert_delete', {id: concert.id}) }}" class="btn btn-outline-danger btn-sm m-2">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

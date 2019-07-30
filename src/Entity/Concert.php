@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ConcertRepository")
@@ -33,6 +35,12 @@ class Concert
      * Name.
      * @var string
      * @ORM\Column(type="string", length=45)
+     *
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min="5",
+     *     max="45",
+     * )
      */
     private $name;
 
@@ -41,6 +49,12 @@ class Concert
      *
      * @var string
      * @ORM\Column(type="string", length=512)
+     *
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min="5",
+     *     max="512",
+     * )
      */
     private $info;
 
@@ -57,6 +71,11 @@ class Concert
      *
      * @var int
      * @ORM\Column(type="integer")
+     *
+     * @Assert\NotBlank
+     * @Assert\GreaterThan(
+     *     value = 10
+     * )
      */
     private $reservation_limit;
 
@@ -127,6 +146,8 @@ class Concert
      * Getter for concert date.
      *
      * @return \DateTimeInterface|null
+     *
+     * @Assert\DateTime
      */
     public function getDate(): ?\DateTimeInterface
     {

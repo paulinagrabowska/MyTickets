@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Concert;
 use App\Entity\Performer;
+use App\Form\ConcertType;
 use App\Form\PerformerType;
 use App\Repository\ConcertRepository;
 use App\Repository\PerformerRepository;
@@ -188,4 +189,121 @@ class AdminController extends Controller
             ]
         );
     }
+
+
+    /**
+     * Add a new concert.
+     *
+     * @param Request $request
+     * @param ConcertRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *     "/concert/add",
+     *     methods={"GET", "POST"},
+     *     name="concert_add",
+     * )
+     */
+
+    public function addConcert(Request $request, ConcertRepository $repository): Response
+    {
+        $concert = new Concert();
+        $form = $this->createForm(ConcertType::class, $concert);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($concert);
+            $this->addFlash('success', 'message.created_successfully');
+
+            return $this->redirectToRoute('concert_show');
+        }
+
+        return $this->render(
+            'admin/concert/add.html.twig',
+            ['form' => $form->createView()]
+        );
+    }
+
+    /**
+     * Edit a concert.
+     *
+     * @param Request $request
+     * @param Concert $concert
+     * @param ConcertRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     * "/concert/{id}/edit",
+     *  methods={"GET", "PUT"},
+     *  requirements={"id": "[1-9]\d*"},
+     *  name="concert_edit",
+     * )
+     */
+
+    public function editConcert(Request $request, Concert $concert, ConcertRepository $repository): Response
+    {
+        $form = $this->createForm(ConcertType::class, $concert, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($concert);
+            $this->addFlash('success', 'message.updated_successfully');
+
+            return $this->redirectToRoute('concert_show');
+        }
+
+        return $this->render(
+            'admin/concert/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'concert' => $concert,
+            ]
+        );
+    }
+
+    /**
+     * Delete a concert.
+     *
+     * @param Request $request
+     * @param Concert $concert
+     * @param ConcertRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *   "/concert/{id}/delete",
+     *   methods={"GET", "DELETE"},
+     *   requirements={"id": "[1-9]\d*"},
+     *   name="concert_delete",
+     * )
+     */
+    public function deleteConcert(Request $request, Concert $concert, ConcertRepository $repository): Response
+    {
+
+        $form = $this->createForm(ConcertType::class, $concert, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->delete($concert);
+            $this->addFlash('success', 'message.deleted_successfully');
+
+            return $this->redirectToRoute('concert_show');
+        }
+
+        return $this->render(
+            'admin/concert/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'concert' => $concert,
+            ]
+        );
+    }
+
+
 }

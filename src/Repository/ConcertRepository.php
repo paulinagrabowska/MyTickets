@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Concert;
+use App\Entity\Performer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -48,6 +49,32 @@ class ConcertRepository extends ServiceEntityRepository
         return $queryBuilder ?: $this->createQueryBuilder('c');
     }
 
+    /**
+     * Save record.
+     *
+     * @param \App\Entity\Concert $concert Concert entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Concert $concert): void
+    {
+        $this->_em->persist($concert);
+        $this->_em->flush($concert);
+    }
+
+    /**
+     * Delete record.
+     *
+     * @param Concert entity $concert
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(Concert $concert): void
+    {
+        $this->_em->remove($concert);
+        $this->_em->flush($concert);
+    }
 
     // /**
     //  * @return Concert[] Returns an array of Concert objects
