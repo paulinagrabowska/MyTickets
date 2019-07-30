@@ -1,0 +1,59 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello performer!{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">{{ 'title.performer_list'|trans }}</h1>
+            {% if performers is defined and performers|length %}
+
+    <div class="navigation text-center">
+
+        {{ knp_pagination_render(performers) }}
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+        <tr class="table-primary">
+            <th>{{  knp_pagination_sortable(performers, 'label.id'|trans, 'p.id') }}</th>
+            <th>{{  knp_pagination_sortable(performers, 'label.firstname'|trans, 'p.firstname') }}</th>
+            <th>{{  knp_pagination_sortable(performers, 'label.lastname'|trans, 'p.lastname') }}</th>
+            <th>{{  knp_pagination_sortable(performers, 'label.stagename'|trans, 'p.stagename') }}</th>
+            <th>{{  knp_pagination_sortable(performers, 'label.info'|trans, 'p.info') }}</th>
+            <th>{{  knp_pagination_sortable(performers, 'label.musicgenre'|trans, 'p.musicgenre') }}</th>
+            <th><a href="#">label.actions</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for performer in performers %}
+            <tr>
+                <td>{{ performer.id }}</td>
+                <td>{{ performer.firstname }}</td>
+                <td>{{ performer.lastname }}</td>
+                <td>{{ performer.stagename }}</td>
+                <td>{{ performer.info}}</td>
+                <td>{{ performer.musicgenre}}</td>
+                <td><a href="{{ url('performer_edit', {id: performer.id}) }}" class="btn btn-outline-info btn-sm m-2" >Edit</a>
+                    {% if not performer.concerts|length %}
+                        <a href="{{ url('performer_delete', {id: performer.id}) }}" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(performers) }}
+    </div>
+
+            {% else %}
+    <p>
+        {% include 'default/_single_flash_message.html.twig' with {
+            type: 'warning',
+            message: 'message.empty_list'|trans
+        } %}
+    </p>
+            {% endif %}
+
+{% endblock %}

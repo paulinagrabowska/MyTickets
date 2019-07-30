@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FrontEndController!{% endblock %}
+
+{% block body %}
+<div class="container-fluid center">
+    <h1 class="text-center">{{ 'title.performers_list'|trans }}</h1>
+    {% if performers is defined and performers|length %}
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(performers) }}
+        </div>
+
+        <div class="row justify-content-center">
+            {% for performer in performers %}
+
+                <div class="card border-info m-3 col-lg-3 col-md-3 col-sm-12 ">
+                    <div class="card-header text-center">{{ performer.firstname }}</div>
+                    <div class="card-header text-center">{{ performer.lastname }}</div>
+                    <div class="card-body">
+                        <h4 class="card-title text-center text-info">{{ performer.stagename }}</h4>
+                        <p class="card-text">{{ performer.info }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-center text-info font-weight-bold text-uppercase">{{ performer.musicgenre }}</li>
+                    </ul>
+                    <div class="card-footer text-muted text-center">
+                        <a href="{{ url('performer_view', {id: performer.id}) }}" class="btn btn-info btn-sm " title="{{ 'performer.view'|trans }}">
+                            {{ 'performer.view'|trans }}
+                        </a>
+
+                    </div>
+                </div>
+
+
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="navigation text-center">
+                {{ knp_pagination_render(performers) }}
+            </div>
+        </div>
+
+
+    {% else %}
+        <p>
+            {% include 'default/_single_flash_message.html.twig' with {
+                type: 'warning',
+                message: 'message.empty_list'|trans
+            } %}
+        </p>
+    {% endif %}
+
+
+
+    {% endblock %}

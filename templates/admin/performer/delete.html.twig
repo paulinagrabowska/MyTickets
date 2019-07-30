@@ -1,0 +1,10 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.performer_delete',
+    page_title_param: {'%id%': performer.id},
+    attr: {
+        method: 'DELETE',
+        action: url('performer_delete', {'id': performer.id}),
+    },
+    back_to_list_path: 'performer_show',
+}
+%}

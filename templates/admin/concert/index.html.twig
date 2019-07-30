@@ -1,0 +1,56 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello Concert!{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">{{ 'title.concert_list'|trans }}</h1>
+    {% if concerts is defined and concerts|length %}
+
+        <div class="navigation text-center">
+
+            {{ knp_pagination_render(concerts) }}
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-info">
+                <th>{{  knp_pagination_sortable(concerts, 'label.id'|trans, 'c.id') }}</th>
+                <th>{{  knp_pagination_sortable(concerts, 'label.name'|trans, 'c.name') }}</th>
+                <th>{{  knp_pagination_sortable(concerts, 'label.info'|trans, 'c.info') }}</th>
+                <th>{{  knp_pagination_sortable(concerts, 'label.date'|trans, 'c.date') }}</th>
+                <th>{{  knp_pagination_sortable(concerts, 'label.limit'|trans, 'c.reservation_limit') }}</th>
+                <th><a href="#">{{ 'label.performer_stagename'|trans }}</a></th>
+                <th><a href="#">label.actions</a></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for concert in concerts %}
+                <tr>
+                    <td>{{ concert.id }}</td>
+                    <td>{{ concert.name }}</td>
+                    <td>{{ concert.info }}</td>
+                    <td>{{ concert.date|date('Y/m/d') }}</td>
+                    <td>{{ concert.ReservationLimit}}</td>
+                    <td>{{ concert.performer.stagename}}</td>
+                    <td><a href="#" class="btn btn-outline-info btn-sm m-2">Edit</a>
+                        <a href="#" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(concerts) }}
+        </div>
+
+    {% else %}
+        <p>
+            {% include 'default/_single_flash_message.html.twig' with {
+                type: 'warning',
+                message: 'message.empty_list'|trans
+            } %}
+        </p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.concert_view'|trans({'%id%': concert.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>{{ 'title.concert_view'|trans({'%id%': concert.id|default('')}) }}</h1>
+    {% if concert is defined and concert|length %}
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active">
+                {{ 'label.name'|trans }}
+            </a>
+            <a href="#" class="list-group-item list-group-item-action disabled">{{  concert.name }}</a>
+            <a href="#" class="list-group-item list-group-item-action">{{ 'label.id'|trans }}</a>
+            <a href="#" class="list-group-item list-group-item-action disabled">{{ concert.id }}</a>
+            <a href="#" class="list-group-item list-group-item-action">{{ 'label.date'|trans }}</a>
+            <a href="#" class="list-group-item list-group-item-action disabled">{{ concert.date|date('Y/m/d') }}}</a>
+            <a href="#" class="list-group-item list-group-item-action">{{ 'label.info'|trans }}</a>
+            <a href="#" class="list-group-item list-group-item-action disabled">{{  concert.info }}</a>
+            <a href="#" class="list-group-item list-group-item-action">{{ 'label.limit'|trans }}</a>
+            <a href="#" class="list-group-item list-group-item-action disabled">{{  concert.ReservationLimit}}</a>
+            <a href="#" class="list-group-item list-group-item-action">{{ 'label.performer_stagename'|trans }}</a>
+            <a href="#" class="list-group-item list-group-item-action disabled">{{  concert.performer.stagename}}</a>
+        </div>
+    {% else %}
+        <p>
+            {{ 'message.item_not_found'|trans }}
+        </p>
+    {% endif %}
+    </div>
+{% endblock %}

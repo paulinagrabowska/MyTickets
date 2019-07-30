@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.performer_view'|trans({'%id%': performer.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">{{ 'title.performer_view'|trans({'%id%': performer.id|default('')}) }}</h1>
+        {% if performer is defined and performer|length %}
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action active">
+                    {{ 'label.stagename'|trans }}
+                </a>
+                <a href="#" class="list-group-item list-group-item-action disabled">{{  performer.stagename }}</a>
+                <a href="#" class="list-group-item list-group-item-action">{{ 'label.id'|trans }}</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.id }}</a>
+                <a href="#" class="list-group-item list-group-item-action">{{ 'label.firstname'|trans }}</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.firstname }}}</a>
+                <a href="#" class="list-group-item list-group-item-action">{{ 'label.lastname'|trans }}</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.lastname }}}</a>
+                <a href="#" class="list-group-item list-group-item-action">{{ 'label.info'|trans }}</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">{{  performer.info }}</a>
+                <a href="#" class="list-group-item list-group-item-action">{{ 'label.musicgenre'|trans }}</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">{{  performer.musicgenre}}</a>
+            </div>
+        {% else %}
+            <p>
+                {% include 'default/_single_flash_message.html.twig' with {
+                    type: 'warning',
+                    message: 'message.item_not_found'|trans
+                } %}
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}
