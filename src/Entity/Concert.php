@@ -80,10 +80,17 @@ class Concert
     private $reservation_limit;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Performer", inversedBy="concerts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Performer", inversedBy="concerts", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $performer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Venue", inversedBy="concerts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $venue;
+
 
     /**
      * Getter for id.
@@ -211,6 +218,18 @@ class Concert
     public function setPerformer(?Performer $performer): self
     {
         $this->performer = $performer;
+
+        return $this;
+    }
+
+    public function getVenue(): ?Venue
+    {
+        return $this->venue;
+    }
+
+    public function setVenue(?Venue $venue): self
+    {
+        $this->venue = $venue;
 
         return $this;
     }

@@ -106,6 +106,8 @@ class Performer
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Concert", mappedBy="performer")
+     *
+     * @Assert\NotBlank
      */
     private $concerts;
 

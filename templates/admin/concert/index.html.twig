@@ -13,13 +13,14 @@
 
         <table class="table table-hover">
             <thead>
-            <tr class="table-info">
+            <tr class="table-primary">
                 <th>{{  knp_pagination_sortable(concerts, 'label.id'|trans, 'c.id') }}</th>
                 <th>{{  knp_pagination_sortable(concerts, 'label.name'|trans, 'c.name') }}</th>
                 <th>{{  knp_pagination_sortable(concerts, 'label.info'|trans, 'c.info') }}</th>
                 <th>{{  knp_pagination_sortable(concerts, 'label.date'|trans, 'c.date') }}</th>
                 <th>{{  knp_pagination_sortable(concerts, 'label.limit'|trans, 'c.reservation_limit') }}</th>
                 <th><a href="#">{{ 'label.performer_stagename'|trans }}</a></th>
+                <th><a href="#">{{ 'label.venue_name'|trans }}</a></th>
                 <th><a href="#">label.actions</a></th>
             </tr>
             </thead>
@@ -32,6 +33,7 @@
                     <td>{{ concert.date|date('Y/m/d') }}</td>
                     <td>{{ concert.ReservationLimit}}</td>
                     <td>{{ concert.performer.stagename}}</td>
+                    <td>{{ concert.venue.name}}</td>
                     <td><a href="{{ url('concert_edit', {id: concert.id}) }}" class="btn btn-outline-info btn-sm m-2">Edit</a>
                         <a href="{{ url('concert_delete', {id: concert.id}) }}" class="btn btn-outline-danger btn-sm m-2">Delete</a>
                     </td>

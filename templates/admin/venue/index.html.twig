@@ -1,0 +1,56 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello Concert!{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">{{ 'title.concert_list'|trans }}</h1>
+    {% if venues is defined and venues|length %}
+
+        <div class="navigation text-center">
+
+            {{ knp_pagination_render(venues) }}
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-primary">
+                <th>{{  knp_pagination_sortable(venues, 'label.id'|trans, 'v.id') }}</th>
+                <th>{{  knp_pagination_sortable(venues, 'label.name'|trans, 'v.name') }}</th>
+                <th>{{  knp_pagination_sortable(venues, 'label.city'|trans, 'v.city') }}</th>
+                <th>{{  knp_pagination_sortable(venues, 'label.street'|trans, 'v.street') }}</th>
+                <th>{{  knp_pagination_sortable(venues, 'label.streetnumber'|trans, 'v.streetnumber') }}</th>
+                <th><a href="#">label.actions</a></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for venue in venues %}
+                <tr>
+                    <td>{{ venue.id }}</td>
+                    <td>{{ venue.name }}</td>
+                    <td>{{ venue.city }}</td>
+                    <td>{{ venue.street}}</td>
+                    <td>{{ venue.streetnumber}}</td>
+                    <td><a href="{{ url('venue_edit', {id: venue.id}) }}" class="btn btn-outline-info btn-sm m-2">Edit</a>
+                        {% if not venue.concerts|length %}
+                        <a href="{{ url('venue_delete', {id: venue.id}) }}" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(venues) }}
+        </div>
+
+    {% else %}
+        <p>
+            {% include 'default/_single_flash_message.html.twig' with {
+                type: 'warning',
+                message: 'message.empty_list'|trans
+            } %}
+        </p>
+    {% endif %}
+
+{% endblock %}

@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Concert;
 use App\Entity\Performer;
+use App\Entity\Venue;
 use App\Form\ConcertType;
 use App\Form\PerformerType;
+use App\Form\VenueType;
 use App\Repository\ConcertRepository;
 use App\Repository\PerformerRepository;
+use App\Repository\VenueRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -301,6 +304,147 @@ class AdminController extends Controller
             [
                 'form' => $form->createView(),
                 'concert' => $concert,
+            ]
+        );
+    }
+
+    /**
+     * @param VenueRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     * @Route("/venue", name="venue_show")
+     */
+    public function venue(VenueRepository $repository, PaginatorInterface $paginator, Request $request)
+    {
+        $venues= $paginator->paginate(
+            $repository->queryAll(),
+            $request->query->getInt('page', 1),
+            Venue::NUMBER_OF_ITEMS
+        );
+
+        return $this->render(
+            'admin/venue/index.html.twig',
+            ['venues' => $venues]
+        );
+    }
+
+    /**
+     * Add Venue.
+     *
+     * @param Request $request
+     * @param VenueRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *     "/venue/add",
+     *     methods={"GET", "POST"},
+     *     name="venue_add",
+     * )
+     */
+    public function addVenue(Request $request, VenueRepository $repository): Response
+    {
+        $venue = new Venue();
+        $form = $this->createForm(VenueType::class, $venue);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($venue);
+            $this->addFlash('success', 'message.created_successfully');
+
+            return $this->redirectToRoute('venue_show');
+        }
+
+        return $this->render(
+            'admin/venue/add.html.twig',
+            ['form' => $form->createView()]
+        );
+    }
+
+
+    /**
+     * Edit venue.
+     *
+     * @param Request $request
+     * @param Venue $venue
+     * @param VenueRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     * "/venue/{id}/edit",
+     *  methods={"GET", "PUT"},
+     *  requirements={"id": "[1-9]\d*"},
+     *  name="venue_edit",
+     * )
+     */
+    public function editVenue(Request $request, Venue $venue, VenueRepository $repository): Response
+    {
+        $form = $this->createForm(VenueType::class, $venue, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($venue);
+            $this->addFlash('success', 'message.updated_successfully');
+
+            return $this->redirectToRoute('venue_show');
+        }
+
+        return $this->render(
+            'admin/venue/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'venue' => $venue,
+            ]
+        );
+    }
+
+    /**
+     * Delete venue.
+     *
+     * @param Request $request
+     * @param Venue $venue
+     * @param VenueRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *   "/venue/{id}/delete",
+     *   methods={"GET", "DELETE"},
+     *   requirements={"id": "[1-9]\d*"},
+     *   name="venue_delete",
+     * )
+     */
+
+    public function deleteVenue(Request $request, Venue $venue, VenueRepository $repository): Response
+    {
+        if ($venue->getConcerts()->count()) {
+            $this->addFlash('warning', 'message.venue_has_concerts');
+
+            return $this->redirectToRoute('venue_show');
+        }
+
+        $form = $this->createForm(VenueType::class, $venue, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->delete($venue);
+            $this->addFlash('success', 'message.deleted_successfully');
+
+            return $this->redirectToRoute('venue_show');
+        }
+
+        return $this->render(
+            'admin/venue/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'venue' => $venue,
             ]
         );
     }

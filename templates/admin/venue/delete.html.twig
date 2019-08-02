@@ -1,0 +1,10 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.venue_delete',
+    page_title_param: {'%id%': venue.id},
+    attr: {
+        method: 'DELETE',
+        action: url('venue_delete', {'id': venue.id}),
+    },
+    back_to_list_path: 'venue_show',
+}
+%}

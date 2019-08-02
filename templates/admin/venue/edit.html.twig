@@ -1,0 +1,10 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.venue_edit',
+    page_title_param: {'%id%': venue.id},
+    attr: {
+        method: 'PUT',
+        action: url('venue_edit', {'id': venue.id}),
+    },
+    back_to_list_path: 'venue_show',
+}
+%}

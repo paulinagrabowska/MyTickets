@@ -2,22 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Concert;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Venue;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ConcertType extends AbstractType
+class VenueType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -26,35 +19,35 @@ class ConcertType extends AbstractType
                 [
                     'label' => 'label.name',
                     'required' => true,
+                    'attr' => ['max_length' => 45],
+                ])
+            ->add('city',
+                TextType::class,
+                [
+                    'label' => 'label.city',
+                    'required' => true,
                     'attr' => ['max_length' => 30],
                 ])
-            ->add('info',
-                TextareaType::class,
+            ->add('street',
+                TextType::class,
                 [
-                    'label' => 'label.info',
+                    'label' => 'label.street',
                     'required' => true,
-                    'attr' => ['max_length' => 512],
+                    'attr' => ['max_length' => 45],
                 ])
-            ->add('date',
-                DateType::class,
-                [
-                    'label' => 'label.date',
-                    'required' => true,
-                ])
-            ->add('reservation_limit',
+            ->add('streetnumber',
                 NumberType::class,
                 [
-                    'label' => 'label.reservationlimit',
+                    'label' => 'label.streetnumber',
                     'required' => true,
                 ])
-            ->add('performer')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Concert::class,
+            'data_class' => Venue::class,
         ]);
     }
 }

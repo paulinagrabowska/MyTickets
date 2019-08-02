@@ -44,6 +44,7 @@ class ConcertFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             $concert->setDate($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $concert->setReservationLimit($this->faker->biasedNumberBetween($min = 10, $max = 10000, $function = 'sqrt'));
             $concert->setPerformer($this->getRandomReference('performers'));
+            $concert->setVenue($this->getRandomReference('venues'));
 
             return $concert;
         });
@@ -59,6 +60,6 @@ class ConcertFixtures extends AbstractBaseFixtures implements DependentFixtureIn
      */
     public function getDependencies(): array
     {
-        return [PerformerFixtures::class];
+        return [PerformerFixtures::class,PerformerFixtures::class, VenueFixtures::class];
     }
 }

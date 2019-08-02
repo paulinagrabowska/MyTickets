@@ -1,0 +1,9 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.venue_add',
+    attr: {
+        method: 'POST',
+        action: url('venue_add')
+    },
+    back_to_list_path: 'venue_show',
+}
+%}
