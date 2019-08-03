@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Concert;
 use App\Entity\Performer;
+use App\Entity\Tag;
 use App\Entity\Venue;
 use App\Form\ConcertType;
 use App\Form\PerformerType;
+use App\Form\TagType;
 use App\Form\VenueType;
 use App\Repository\ConcertRepository;
 use App\Repository\PerformerRepository;
+use App\Repository\TagRepository;
 use App\Repository\VenueRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -309,6 +312,8 @@ class AdminController extends Controller
     }
 
     /**
+     * Show venues.
+     *
      * @param VenueRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
@@ -449,5 +454,144 @@ class AdminController extends Controller
         );
     }
 
+    /*TAGS*/
 
+    /**
+     * @param TagRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     *
+     * @Route("/tag", name="tag_show")
+     */
+    public function tag(TagRepository $repository, PaginatorInterface $paginator, Request $request)
+    {
+        $tags= $paginator->paginate(
+            $repository->queryAll(),
+            $request->query->getInt('page', 1),
+            Venue::NUMBER_OF_ITEMS
+        );
+
+        return $this->render(
+            'admin/tag/index.html.twig',
+            ['tags' => $tags]
+        );
+    }
+
+
+    /**
+     * Add a new tag.
+     *
+     * @param Request $request
+     * @param TagRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/tag/add",
+     *     methods={"GET", "POST"},
+     *     name="tag_add",
+     * )
+     */
+    public function addTag(Request $request, TagRepository $repository): Response
+    {
+        $tag = new Tag();
+        $form = $this->createForm(TagType::class, $tag);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($tag);
+            $this->addFlash('success', 'message.created_successfully');
+
+            return $this->redirectToRoute('tag_show');
+        }
+
+        return $this->render(
+            'admin/tag/add.html.twig',
+            ['form' => $form->createView()]
+        );
+    }
+
+    /**
+     * Edit a tag.
+     *
+     * @param Request $request
+     * @param Tag $tag
+     * @param TagRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     * "/tag/{id}/edit",
+     *  methods={"GET", "PUT"},
+     *  requirements={"id": "[1-9]\d*"},
+     *  name="tag_edit",
+     * )
+     */
+    public function editTag(Request $request, Tag $tag, TagRepository $repository): Response
+    {
+        $form = $this->createForm(TagType::class, $tag, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($tag);
+            $this->addFlash('success', 'message.updated_successfully');
+
+            return $this->redirectToRoute('tag_show');
+        }
+
+        return $this->render(
+            'admin/tag/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'tag' => $tag,
+            ]
+        );
+    }
+
+    /**
+     * Delete tag.
+     *
+     * @param Request $request
+     * @param Tag $tag
+     * @param TagRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *   "/tag/{id}/delete",
+     *   methods={"GET", "DELETE"},
+     *   requirements={"id": "[1-9]\d*"},
+     *   name="tag_delete",
+     * )
+     */
+
+    public function deleteTag(Request $request, Tag $tag, TagRepository $repository): Response
+    {
+
+
+        $form = $this->createForm(TagType::class, $tag, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->delete($tag);
+            $this->addFlash('success', 'message.deleted_successfully');
+
+            return $this->redirectToRoute('tag_show');
+        }
+
+        return $this->render(
+            'admin/tag/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'tag' => $tag,
+            ]
+        );
+    }
 }

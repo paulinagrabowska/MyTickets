@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello Concert!{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">{{ 'title.concert_list'|trans }}</h1>
+    {% if tags is defined and tags|length %}
+
+        <div class="navigation text-center">
+
+            {{ knp_pagination_render(tags) }}
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-primary">
+                <th>{{  knp_pagination_sortable(tags, 'label.id'|trans, 't.id') }}</th>
+                <th>{{  knp_pagination_sortable(tags, 'label.name'|trans, 't.title') }}</th>
+                <th><a href="#">label.actions</a></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tag in tags %}
+                <tr>
+                    <td>{{ tag.id }}</td>
+                    <td>{{ tag.title }}</td>
+                    <td><a href="{{ url('tag_edit', {id: tag.id}) }}" class="btn btn-outline-info btn-sm m-2">Edit</a>
+                            <a href="{{ url('tag_delete', {id: tag.id}) }}" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(tags) }}
+        </div>
+
+    {% else %}
+        <p>
+            {% include 'default/_single_flash_message.html.twig' with {
+                type: 'warning',
+                message: 'message.empty_list'|trans
+            } %}
+        </p>
+    {% endif %}
+
+{% endblock %}
