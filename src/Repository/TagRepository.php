@@ -20,6 +20,17 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    /**
+     * @param string $title
+     *
+     * @return Tag|null
+     */
+    public function findOneByTitle(string $title)
+    {
+        return $this->findOneBy(['title' => $title]);
+    }
+
+
 
     public function queryAll(): QueryBuilder
     {

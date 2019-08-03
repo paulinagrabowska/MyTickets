@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Concert;
+use App\Entity\Tag;
+use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -14,6 +16,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConcertType extends AbstractType
 {
+    /**
+     * Tags data transformer.
+     *
+     * @var \App\Form\DataTransformer\TagsDataTransformer|null
+     */
+    private $tagsDataTransformer = null;
+
+    /**
+     * TaskType constructor.
+     *
+     * @param \App\Form\DataTransformer\TagsDataTransformer $tagsDataTransformer Tags data transformer
+     */
+    public function __construct(TagsDataTransformer $tagsDataTransformer)
+    {
+        $this->tagsDataTransformer = $tagsDataTransformer;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -48,7 +67,37 @@ class ConcertType extends AbstractType
                     'required' => true,
                 ])
             ->add('performer')
-        ;
+            ->add('venue')
+            ->add(
+            'tags',
+            EntityType::class,
+            [
+                'class' => Tag::class,
+                'choice_label' => function (Tag $tag) {
+                    return $tag->getTitle();
+                },
+                'label' => 'label.tag',
+                'placeholder' => 'label.none',
+                'required' => true,
+                'expanded' => true,
+                'multiple' =>true,
+            ]
+        )
+        ->add(
+        'tags',
+        TextType::class,
+        [
+            'label' => 'label.tags',
+            'required' => false,
+            'attr' => [
+                'max_length' => 255,
+            ],
+        ]
+    );
+
+        $builder->get('tags')->addModelTransformer(
+            $this->tagsDataTransformer
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -56,5 +105,18 @@ class ConcertType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Concert::class,
         ]);
+    }
+
+    /**
+     * Returns the prefix of the template block name for this type.
+     *
+     * The block prefix defaults to the underscored short class name with
+     * the "Type" suffix removed (e.g. "UserProfileType" => "user_profile").
+     *
+     * @return string The prefix of the template block name
+     */
+    public function getBlockPrefix(): string
+    {
+        return 'concert';
     }
 }

@@ -45,6 +45,14 @@ class ConcertFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             $concert->setReservationLimit($this->faker->biasedNumberBetween($min = 10, $max = 10000, $function = 'sqrt'));
             $concert->setPerformer($this->getRandomReference('performers'));
             $concert->setVenue($this->getRandomReference('venues'));
+            $tags = $this->getRandomReferences(
+                'tags',
+                $this->faker->numberBetween(0, 5)
+            );
+
+            foreach ($tags as $tag) {
+                $concert->addTag($tag);
+            }
 
             return $concert;
         });
