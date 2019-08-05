@@ -1,0 +1,11 @@
+{% include 'default/_front_form.html.twig' with {
+    page_title: 'title.user_add',
+    attr: {
+        method: 'POST',
+        action: url('user_add')
+    },
+    back_to_list_path: 'main_page',
+}
+%}
+
+

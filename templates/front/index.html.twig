@@ -3,7 +3,6 @@
 {% block title %}Hello FrontEndController!{% endblock %}
 
 {% block body %}
-    <div class="container-fluid center">
     <h1 class="text-center">{{ 'title.concert_list'|trans }}</h1>
     {% if concerts is defined and concerts|length %}
 
@@ -33,7 +32,6 @@
 
 
         {% endfor %}
-        </div>
 
 <div class="row">
     <div class="navigation text-center">

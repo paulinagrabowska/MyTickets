@@ -86,7 +86,7 @@ class User implements UserInterface
      *     max="255",
      * )
      *
-     * @SecurityAssert\UserPassword
+     *
      */
     private $password;
 

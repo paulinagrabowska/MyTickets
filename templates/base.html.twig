@@ -38,7 +38,7 @@
                         <a class="nav-link" href="{{ path('security_login') }}">LOGIN</a>
                     </li>
                     <li class="nav-item font-weight-bold">
-                        <a class="nav-link" href="#">SIGN UP</a>
+                        <a class="nav-link" href="{{ path('user_add') }}">SIGN UP</a>
                     </li>
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
@@ -66,10 +66,11 @@
             </div>
         </div>
     </header>
+    <div class="container">
 
         {% block body %}{% endblock %}
 
-
+    </div>
     {% block javascripts %}{% endblock %}
     </body>
     <!-- Footer -->
