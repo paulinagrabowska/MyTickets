@@ -15,12 +15,18 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TagRepository extends ServiceEntityRepository
 {
+    /**
+     * TagRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Tag::class);
     }
 
     /**
+     * Find tag by title.
+     *
      * @param string $title
      *
      * @return Tag|null
@@ -30,8 +36,11 @@ class TagRepository extends ServiceEntityRepository
         return $this->findOneBy(['title' => $title]);
     }
 
-
-
+    /**
+     * Querry all tags.
+     *
+     * @return QueryBuilder
+     */
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
