@@ -20,7 +20,7 @@
             <ul class="navbar-nav mr-auto">
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <li class="nav-item">
-                    <a class="nav-link text-warning">Hello {{ app.user.firstName }}</a>
+                    <a class="nav-link text-warning" href="{{ path("user_view", {id: app.user.getId()}) }}">{{ app.user.firstName }} profile</a>
                 </li>
                 {% endif %}
                 <li class="nav-item">
@@ -66,11 +66,10 @@
             </div>
         </div>
     </header>
-    <div class="container">
-
+    {% include 'default/_flash_messages.html.twig' %}
         {% block body %}{% endblock %}
 
-    </div>
+
     {% block javascripts %}{% endblock %}
     </body>
     <!-- Footer -->

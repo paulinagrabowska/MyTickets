@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+ <div class="container">
+    <h1 class="text-center m-2">Hello {{ user.firstName}}! </h1>
+
+     <table class="table table-hover ">
+         <thead>
+         <tr class="table-warning">
+             <th scope="col">First Name</th>
+             <th scope="col">Last Name</th>
+             <th scope="col">Phonenumber</th>
+             <th scope="col">Email</th>
+             <th scope="col">Actions</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="table-secondary">
+             <td>{{ user.firstName}}</td>
+             <td>{{ user.lastName}}</td>
+             <td>{{ user.phone}}</td>
+             <td>{{ user.email}}</td>
+             <td><a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-outline-danger btn-sm m-2">Change data</a>
+                 <a href="{{ path('user_edit_pass', {'id': user.id}) }}" class="btn btn-outline-warning btn-sm m-2">Change password</a>
+                 <a href="#" class="btn btn-outline-success btn-sm m-2">See reservations</a>
+             </td>
+         </tr>
+         </tbody>
+     </table>
+
+
+
+
+ </div>
+
+{% endblock %}

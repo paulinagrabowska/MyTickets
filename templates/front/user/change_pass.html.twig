@@ -1,0 +1,10 @@
+{% include 'default/_front_form.html.twig' with {
+    page_title: 'title.user_edit_pass',
+    page_title_param: {'%id%': user.id},
+    attr: {
+        method: 'PUT',
+        action: url('user_edit_pass', {'id': user.id}),
+    },
+    back_to_list_path: 'main_page'
+}
+%}
