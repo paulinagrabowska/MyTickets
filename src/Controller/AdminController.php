@@ -5,14 +5,18 @@ namespace App\Controller;
 use App\Entity\Concert;
 use App\Entity\Performer;
 use App\Entity\Tag;
+use App\Entity\User;
 use App\Entity\Venue;
 use App\Form\ConcertType;
 use App\Form\PerformerType;
 use App\Form\TagType;
+use App\Form\UserPromoteType;
+use App\Form\UserType;
 use App\Form\VenueType;
 use App\Repository\ConcertRepository;
 use App\Repository\PerformerRepository;
 use App\Repository\TagRepository;
+use App\Repository\UserRepository;
 use App\Repository\VenueRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -594,4 +598,112 @@ class AdminController extends Controller
             ]
         );
     }
+
+    /*USERS*/
+
+    /**
+     * Show all users.
+     *
+     * @param UserRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     *
+     * @Route("/user", name="user_show")
+     */
+    public function user( UserRepository $repository, PaginatorInterface $paginator, Request $request)
+    {
+        $users= $paginator->paginate(
+            $repository->queryAll(),
+            $request->query->getInt('page', 1),
+            User::NUMBER_OF_ITEMS
+        );
+
+        return $this->render(
+            'admin/user/index.html.twig',
+            ['users' => $users]
+        );
+    }
+
+    /**
+     * Delete user.
+     *
+     * @param Request $request
+     * @param User $user
+     * @param UserRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *   "/user/{id}/delete",
+     *   methods={"GET", "DELETE"},
+     *   requirements={"id": "[1-9]\d*"},
+     *   name="user_delete",
+     * )
+     */
+
+    public function deleteUser(Request $request, User $user, UserRepository $repository): Response
+    {
+
+        $form = $this->createForm(UserType::class, $user, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->delete($user);
+            $this->addFlash('success', 'message.deleted_successfully');
+
+            return $this->redirectToRoute('user_show');
+        }
+
+        return $this->render(
+            'admin/user/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @param UserRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     * "/user/{id}/promote",
+     *  methods={"GET", "PUT"},
+     *  requirements={"id": "[1-9]\d*"},
+     *  name="user_promote",
+     * )
+     */
+    public function userPromote(Request $request, User $user, UserRepository $repository): Response
+    {
+        $form = $this->createForm(UserPromoteType::class, $user, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($user);
+            $this->addFlash('success', 'message.updated_successfully');
+
+            return $this->redirectToRoute('user_show');
+        }
+
+        return $this->render(
+            'admin/user/promote.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
+    }
+
+
 }

@@ -1,0 +1,10 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.user_promote',
+    page_title_param: {'%id%': user.id},
+    attr: {
+        method: 'PUT',
+        action: url('user_promote', {'id': user.id}),
+    },
+    back_to_list_path: 'user_show',
+}
+%}
