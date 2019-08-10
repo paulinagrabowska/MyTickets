@@ -1,0 +1,12 @@
+{% include 'default/_front_form.html.twig' with {
+    page_title: 'title.reservation_add',
+    page_title_param: {'%id%': concert.id},
+    attr: {
+        method: 'POST',
+        action: url('reservation_new' , {'id': concert.id})
+    },
+    back_to_list_path: 'main_page',
+}
+%}
+
+

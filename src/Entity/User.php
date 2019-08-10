@@ -5,6 +5,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -94,8 +96,6 @@ class User implements UserInterface
      *     min="3",
      *     max="255",
      * )
-     *
-     *
      */
     private $password;
 
@@ -153,6 +153,16 @@ class User implements UserInterface
      * )
      */
     private $phone;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="user")
+     */
+    private $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
 
     /**
@@ -224,11 +234,12 @@ class User implements UserInterface
      */
     public function getRoles() : array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = static::ROLE_USER;
+        $tmpRoles = $this->roles;
 
-        return array_unique($roles);
+        if(in_array('ROLE_USER', $tmpRoles) === false) {
+            $tmpRoles[] = 'ROLE_USER';
+        }
+        return $tmpRoles;
     }
 
     /**
@@ -336,8 +347,44 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        return $this->firstName;
+        $fname = $this->firstName;
+        $lname = $this->lastName;
+        return $fname. " " .  $lname;
+    }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->contains($reservation)) {
+            $this->reservations->removeElement($reservation);
+            // set the owning side to null (unless already changed)
+            if ($reservation->getUser() === $this) {
+                $reservation->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container ">
         <h1 class="text-center">{{ 'title.performer_view'|trans({'%id%': performer.id|default('')}) }}</h1>
         {% if performer is defined and performer|length %}
-            <div class="list-group">
+            <div class="list-group m-lg-2">
                 <a href="#" class="list-group-item list-group-item-action active">
                     {{ 'label.stagename'|trans }}
                 </a>
@@ -32,5 +32,7 @@
                 } %}
             </p>
         {% endif %}
+
+        <a href="{{ path('performer_front_show') }}" class="btn btn-outline-info m-2">Go back</a>
     </div>
 {% endblock %}

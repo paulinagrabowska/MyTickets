@@ -65,6 +65,8 @@ class Concert
      *
      * @var \DateTime
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\DateTime
      */
     private $date;
 
@@ -107,9 +109,15 @@ class Concert
      */
     private $tags;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="concert")
+     */
+    private $reservations;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
 
@@ -199,11 +207,11 @@ class Concert
     /**
      * Getter for concert reservations limit.
      *
-     * @return int|null
+     * @return int
      */
-    public function getReservationLimit(): ?int
+    public function getReservationLimit(): int
     {
-        return $this->reservation_limit;
+        return $this->reservation_limit - $this->reservations->count();
     }
 
     /**
@@ -279,5 +287,41 @@ class Concert
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setConcert($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->contains($reservation)) {
+            $this->reservations->removeElement($reservation);
+            // set the owning side to null (unless already changed)
+            if ($reservation->getConcert() === $this) {
+                $reservation->setConcert(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

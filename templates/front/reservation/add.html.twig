@@ -1,0 +1,9 @@
+{% include 'default/_front_form.html.twig' with {
+    page_title: 'title.reservation_add',
+    attr: {
+        method: 'POST',
+        action: url('reservation_add')
+    },
+    back_to_list_path: 'main_page',
+}
+%}

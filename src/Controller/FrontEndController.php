@@ -4,8 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Concert;
 use App\Entity\Performer;
+use App\Entity\Reservation;
+use App\Entity\Venue;
+use App\Form\ReservationType;
+use App\Form\SpecificReservationType;
+use App\Form\VenueType;
 use App\Repository\ConcertRepository;
 use App\Repository\PerformerRepository;
+use App\Repository\ReservationRepository;
+use App\Repository\VenueRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,14 +108,98 @@ class FrontEndController extends Controller
         );
     }
 
+    /**
+     * Make reservation.
+     *
+     * @param Request $request
+     * @param ReservationRepository $repository
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *     "/reservation",
+     *     methods={"GET", "POST"},
+     *     name="reservation_add",
+     * )
+     */
+    public function addReservation(Request $request, ReservationRepository $repository , ConcertRepository $concertRepository): Response
+    {
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reservation->setUser($this->getUser());
+            $repository->save($reservation);
+            $this->addFlash('success', 'message.created_successfully');
+
+            return $this->redirectToRoute('main_page');
+        }
+
+        return $this->render(
+            'front/reservation/add.html.twig',
+            ['form' => $form->createView()]
+        );
+    }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * Make reservation.
+     *
+     * @param Request $request
+     * @param ReservationRepository $repository
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *     "/reservation/{id}",
+     *     methods={"GET", "POST"},
+     *     name="reservation_new",
+     *     requirements={"id": "[1-9]\d*"},
+     * )
+     */
+    public function addSpecificReservation(Concert $concert, Request $request, ReservationRepository $repository , ConcertRepository $concertRepository): Response
+    {
+
+        $reservation = new Reservation();
+        $form = $this->createForm(SpecificReservationType::class, $reservation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reservation->setUser($this->getUser());
+            $reservation->setConcert($concert);
+            $repository->save($reservation);
+            $this->addFlash('success', 'message.created_successfully');
+
+            return $this->redirectToRoute('main_page');
+        }
+
+        return $this->render(
+            'front/reservation/add_specific.html.twig',
+            ['form' => $form->createView(),
+                'concert' => $concert]
+        );
+    }
+
+
+    /**
+     * @param ConcertRepository $concertRepository
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
      * @Route("/search-results", methods={"POST"}, name="search_results")
      */
-    public function searchResults()
+    public function searchResults(ConcertRepository $concertRepository, Request $request, PaginatorInterface $paginator)
     {
-        return $this->render('front/search_results.html.twig');
+        $search_results = $concertRepository->search($request->request->get('search_value'))->getQuery()->getResult();
+
+        $concerts = $paginator->paginate(
+            $search_results,
+            $request->query->getInt('page', 1),
+           Concert::NUMBER_OF_ITEMS
+        );
+
+        return $this->render('front/search_results.html.twig',
+            ['concerts' => $concerts]);
     }
 
 }

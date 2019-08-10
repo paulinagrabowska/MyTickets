@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List of reservations!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">{{ 'title.reservations_list'|trans }}</h1>
+        {% if reservations is defined and reservations|length %}
+
+            <div class="navigation text-center">
+
+                {{ knp_pagination_render(reservations) }}
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                <tr class="table-primary">
+                    <th>{{  knp_pagination_sortable(reservations, 'label.id'|trans, 'r.id') }}</th>
+                    <th>{{  knp_pagination_sortable(reservations, 'label.date'|trans, 'r.date') }}</th>
+                    <th>{{  knp_pagination_sortable(reservations, 'label.concert'|trans, 'r.concert') }}</th>
+                    <th>{{  knp_pagination_sortable(reservations, 'label.user'|trans, 'r.user') }}</th>
+                    <th><a href="#">label.actions</a></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.id }}</td>
+                        <td>{{ reservation.date|date('Y/m/d') }}</td>
+                        <td>{{ reservation.concert }}</td>
+                        <td>{{ reservation.user}}</td>
+                        <td>
+                            <a href="#" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="navigation text-center">
+                {{ knp_pagination_render(reservations) }}
+            </div>
+
+        {% else %}
+            <p>
+                {% include 'default/_single_flash_message.html.twig' with {
+                    type: 'warning',
+                    message: 'message.empty_list'|trans
+                } %}
+            </p>
+        {% endif %}
+
+        <a href="{{ path('user_view', {'id': user.id}) }}" class="btn btn-outline-warning btn-sm m-2">Go back</a>
+    </div>
+
+{% endblock %}

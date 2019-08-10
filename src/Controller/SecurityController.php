@@ -87,12 +87,8 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            $data = $form->getData();
-//            dump($data);
             $password = $form->get('password')->getData();
-            $user->setPassword(
-                $encoder->encodePassword($user, $password
-                ));
+            $user->setPassword($encoder->encodePassword($user, $password));
             $user->setRoles([User::ROLE_USER]);
             if ($repository->findOneBy(['email' => $user->getEmail()])) {
                 $this->addFlash('error', 'message.user_exists');

@@ -1,12 +1,61 @@
 {% extends 'base.html.twig' %}
 
-  {% block body %}
+{% block title %}Search Results!{% endblock %}
 
-      <section class="jumbotron text-center">
-          <div class="container">
-              <h1 class="jumbotron-heading">No results were found</h1>
-              <h1 class="jumbotron-heading">Search results</h1>
-          </div>
-      </section>
+{% block body %}
+<div class="container-fluid center">
+    <h1 class="text-center">{{ 'title.concert_list'|trans }}</h1>
+    {% if concerts is defined and concerts|length %}
 
-  {% endblock %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(concerts) }}
+    </div>
+
+    <div class="row justify-content-center">
+        {% for concert in concerts %}
+            <div class="card border-secondary m-3 col-lg-3 col-md-3 col-sm-12 ">
+                <div class="card-header text-center">{{ concert.date|date('Y/m/d') }}</div>
+                <div class="card-body">
+                    <h4 class="card-title text-center">{{ concert.name }}</h4>
+                    <p class="card-text">{{ concert.info }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-center text-warning font-weight-bold text-uppercase">{{ concert.performer.stagename }}</li>
+                </ul>
+                <div class="card-footer text-muted text-center">
+                    <a href="{{ url('concert_view', {id: concert.id}) }}" class="btn btn-warning btn-sm " title="{{ 'concert.view'|trans }}">
+                        {{ 'concert.view'|trans }}
+                    </a>
+
+                </div>
+                <div class="card-footer text-muted text-center">
+                    <a href="{{ url('reservation_new', {id: concert.id}) }}" class="btn btn-outline-warning btn-sm " title="{{ 'concert.view'|trans }}">
+                        {{ 'book.ticket'|trans }}
+                    </a>
+
+                </div>
+            </div>
+        {% endfor %}
+
+
+
+        <div class="navigation">
+            {{ knp_pagination_render(concerts) }}
+        </div>
+
+
+
+        {% else %}
+            <p>
+                {% include 'default/_single_flash_message.html.twig' with {
+                    type: 'warning',
+                    message: 'message.no_search_results'|trans
+                } %}
+            </p>
+        {% endif %}
+    </div>
+
+
+
+    {% endblock %}

@@ -60,14 +60,17 @@ class UserPromoteType extends AbstractType
             ->add('roles',
                 ChoiceType::class,
                 [
+                    'label' => 'label.role',
                     'multiple' => true,
                     'expanded' => true,
                     'choices' => [
-                        'Admin' => 'ROLE_ADMIN',
-                        'Moderator' => 'ROLE_MODERATOR'
-                    ]
-                ])
-        ;
+                        'ADMIN' => 'ROLE_ADMIN',
+                        'USER' => 'ROLE_USER'
+                    ],
+                    'choice_attr' => function($val) {
+                        return ($val == 'ROLE_USER' ? ['disabled' => 'disabled'] : []);
+                    }
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

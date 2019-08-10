@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Concert;
+use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\PerformerType;
 use App\Form\UserDataType;
 use App\Form\UserPasswordType;
 use App\Form\UserType;
+use App\Repository\ReservationRepository;
 use App\Repository\UserRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +25,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * Class ProfileController.
  *
  * @Route("/user")
+ * @IsGranted("ROLE_USER")
  */
 
 class UserController extends Controller
@@ -61,7 +66,7 @@ class UserController extends Controller
      *     methods={"GET", "PUT"},
      * )
      */
-    public function user_change_data(User $user, UserRepository $repository, Request $request): Response
+    public function userChangeData(User $user, UserRepository $repository, Request $request): Response
     {
         if ($user !== $this->getUser()) {
             $this->addFlash('warning', 'message.forbidden');
@@ -103,7 +108,7 @@ class UserController extends Controller
      *     methods={"GET", "PUT"},
      * )
      */
-    public function user_change_pass(User $user, UserRepository $repository, Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function userChangePass(User $user, UserRepository $repository, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         if ($user !== $this->getUser()) {
             $this->addFlash('warning', 'message.forbidden');
@@ -129,4 +134,34 @@ class UserController extends Controller
                 'user' => $user,
             ]);
     }
+
+    /**
+     * @param ReservationRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     *
+     * @Route("/reservation", name="user_reservations")
+     */
+    public function reservationList(ReservationRepository $repository, PaginatorInterface $paginator, Request $request)
+    {
+        $user = $this->getUser();
+        $reservations= $paginator->paginate(
+            $repository->queryByAuthor($user),
+            $request->query->getInt('page', 1),
+            Reservation::NUMBER_OF_ITEMS
+        );
+
+        return $this->render(
+            'front/user/reservations.html.twig',
+            ['reservations' => $reservations,
+                'user' => $user
+            ]
+        );
+    }
+
+
+
+
+
 }

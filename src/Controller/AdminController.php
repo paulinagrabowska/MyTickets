@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Concert;
 use App\Entity\Performer;
+use App\Entity\Reservation;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Entity\Venue;
@@ -15,10 +16,12 @@ use App\Form\UserType;
 use App\Form\VenueType;
 use App\Repository\ConcertRepository;
 use App\Repository\PerformerRepository;
+use App\Repository\ReservationRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
 use App\Repository\VenueRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminController extends Controller
 {
@@ -690,6 +694,8 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if(!in_array('ROLE_USER', $user['roles']))
+                $user['roles'][] = 'ROLE_USER';
             $repository->save($user);
             $this->addFlash('success', 'message.updated_successfully');
 
@@ -702,6 +708,28 @@ class AdminController extends Controller
                 'form' => $form->createView(),
                 'user' => $user,
             ]
+        );
+    }
+
+    /**
+     * @param ReservationRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     *
+     * @Route("/reservation", name="reservation_show")
+     */
+    public function reservation(ReservationRepository $repository, PaginatorInterface $paginator, Request $request)
+    {
+        $reservations= $paginator->paginate(
+            $repository->queryAll(),
+            $request->query->getInt('page', 1),
+            Reservation::NUMBER_OF_ITEMS
+        );
+
+        return $this->render(
+            'admin/reservation/index.html.twig',
+            ['reservations' => $reservations]
         );
     }
 
