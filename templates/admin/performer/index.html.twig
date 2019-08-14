@@ -20,7 +20,7 @@
             <th>{{  knp_pagination_sortable(performers, 'label.stagename'|trans, 'p.stagename') }}</th>
             <th>{{  knp_pagination_sortable(performers, 'label.info'|trans, 'p.info') }}</th>
             <th>{{  knp_pagination_sortable(performers, 'label.musicgenre'|trans, 'p.musicgenre') }}</th>
-            <th><a href="#">label.actions</a></th>
+            <th><a href="#">{{ 'label.actions'|trans }}</a></th>
         </tr>
         </thead>
         <tbody>
@@ -32,9 +32,9 @@
                 <td>{{ performer.stagename }}</td>
                 <td>{{ performer.info}}</td>
                 <td>{{ performer.musicgenre}}</td>
-                <td><a href="{{ url('performer_edit', {id: performer.id}) }}" class="btn btn-outline-info btn-sm m-2" >Edit</a>
+                <td><a href="{{ url('performer_edit', {id: performer.id}) }}" class="btn btn-outline-info btn-sm m-2" >{{ 'action.edit'|trans }}</a>
                     {% if not performer.concerts|length %}
-                        <a href="{{ url('performer_delete', {id: performer.id}) }}" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                        <a href="{{ url('performer_delete', {id: performer.id}) }}" class="btn btn-outline-danger btn-sm m-2">{{ 'action.delete'|trans }}</a>
                         </a>
                     {% endif %}
                 </td>

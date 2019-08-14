@@ -20,32 +20,31 @@
             <ul class="navbar-nav mr-auto">
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <li class="nav-item">
-                    <a class="nav-link text-warning" href="{{ path("user_view", {id: app.user.getId()}) }}">{{ app.user.firstName }} profile</a>
+                    <a class="nav-link text-warning" href="{{ path("user_view", {id: app.user.getId()}) }}">PROFIL {{ app.user.firstName }} </a>
                 </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('main_page') }}">HOME</a>
+                    <a class="nav-link" href="{{ path('main_page') }}">{{ 'label.main_page'|trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('performer_front_show') }}">PERFORMERS</a>
+                    <a class="nav-link" href="{{ path('performer_front_show') }}">{{ 'label.performers'|trans }}</a>
                 </li>
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('reservation_add') }}">BOOK A TICKET</a>
+                    <a class="nav-link" href="{{ path('reservation_add') }}">{{ 'label.book_a_ticket'|trans }}</a>
                 </li>
                 <li class="nav-item float-right font-weight-bold">
-                        <a class="nav-link" href="{{ path('security_logout') }}">LOGOUT</a>
+                        <a class="nav-link" href="{{ path('security_logout') }}">{{ 'label.logout'|trans }}</a>
                     </li>
                 {% else %}
                     <li class="nav-item font-weight-bold">
-                        <a class="nav-link" href="{{ path('security_login') }}">LOGIN</a>
+                        <a class="nav-link" href="{{ path('security_login') }}">{{ 'label.login'|trans }}</a>
                     </li>
                     <li class="nav-item font-weight-bold">
-                        <a class="nav-link" href="{{ path('user_add') }}">SIGN UP</a>
+                        <a class="nav-link" href="{{ path('user_add') }}">{{ 'label.sign_up'|trans }}</a>
                     </li>
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
-
                     <li class="nav-item font-weight-bold">
                         <a class="nav-link" href="{{ path('admin_main_page') }}">ADMIN</a>
                     </li>
@@ -54,8 +53,8 @@
             </ul>
         </div>
         <form method="POST" class="form-inline my-2 my-lg-0" action="{{ path('search_results') }}">
-            <input class="form-control mr-sm-2" type="search" name="search_value" placeholder="Search" aria-label="Search video">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search concert</button>
+            <input class="form-control mr-sm-2" type="search" name="search_value" placeholder="{{ 'label.search'|trans }}" aria-label="Search video">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">{{ 'label.concert_search'|trans }}</button>
         </form>
         </div>
     </nav>
@@ -64,7 +63,7 @@
             <div class="row align-self-center ">
                 <div class=" m-auto">
                     <h1 class="font-weight-bold text-white">MyTickets</h1>
-                    <p class="font-weight-bold text-warning">Best place to book concert tickets</p>
+                    <p class="font-weight-bold text-warning">{{ 'info.mytickets'|trans }}</p>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="text-center">{{ 'title.reservations_list'|trans }}</h1>
+        <h1 class="text-center">{{ 'title.reservation_list'|trans }}</h1>
         {% if reservations is defined and reservations|length %}
 
             <div class="navigation text-center">
@@ -19,7 +19,7 @@
                     <th>{{  knp_pagination_sortable(reservations, 'label.date'|trans, 'r.date') }}</th>
                     <th>{{  knp_pagination_sortable(reservations, 'label.concert'|trans, 'r.concert') }}</th>
                     <th>{{  knp_pagination_sortable(reservations, 'label.user'|trans, 'r.user') }}</th>
-                    <th><a href="#">label.actions</a></th>
+                    <th><a href="#">{{ 'label.actions'|trans }}</a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@
                         <td>{{ reservation.concert }}</td>
                         <td>{{ reservation.user}}</td>
                         <td>
-                            <a href="#" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                            <a href="#" class="btn btn-outline-danger btn-sm m-2">{{ 'action.delete'|trans }}</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -50,7 +50,7 @@
             </p>
         {% endif %}
 
-        <a href="{{ path('user_view', {'id': user.id}) }}" class="btn btn-outline-warning btn-sm m-2">Go back</a>
+        <a href="{{ path('user_view', {'id': user.id}) }}" class="btn btn-outline-warning btn-sm m-2">{{ 'action.back_to_list'|trans }}</a>
     </div>
 
 {% endblock %}

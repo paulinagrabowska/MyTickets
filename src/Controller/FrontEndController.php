@@ -190,7 +190,7 @@ class FrontEndController extends Controller
      */
     public function searchResults(ConcertRepository $concertRepository, Request $request, PaginatorInterface $paginator)
     {
-        $search_results = $concertRepository->search($request->request->get('search_value'))->getQuery()->getResult();
+        $search_results = $concertRepository->search($request->request->get('search_value'));
 
         $concerts = $paginator->paginate(
             $search_results,

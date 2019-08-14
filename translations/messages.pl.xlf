@@ -1,0 +1,294 @@
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="label.id">
+                <source>label.id</source>
+                <target>Id</target>
+            </trans-unit>
+            <trans-unit id="label.title">
+                <source>label.title</source>
+                <target>Tytuł</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Tagi</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Nazwa</target>
+            </trans-unit>
+            <trans-unit id="label.info">
+                <source>label.info</source>
+                <target>Informacje</target>
+            </trans-unit>
+            <trans-unit id="label.date">
+                <source>label.date</source>
+                <target>Data</target>
+            </trans-unit>
+            <trans-unit id="label.limit">
+                <source>label.limit</source>
+                <target>Limit miejsc</target>
+            </trans-unit>
+            <trans-unit id="label.performer_stagename">
+                <source>label.performer_stagename</source>
+                <target>Nazwa wykonawcy</target>
+            </trans-unit>
+            <trans-unit id="label.venue_name">
+                <source>label.venue_name</source>
+                <target>Nazwa miejsca</target>
+            </trans-unit>
+            <trans-unit id="label.actions">
+                <source>label.actions</source>
+                <target>Akcje</target>
+            </trans-unit>
+            <trans-unit id="action.edit">
+                <source>action.edit</source>
+                <target>Edytuj</target>
+            </trans-unit>
+            <trans-unit id="action.delete">
+                <source>action.delete</source>
+                <target>Usuń</target>
+            </trans-unit>
+            <trans-unit id="label.firstname">
+                <source>label.firstname</source>
+                <target>Imię</target>
+            </trans-unit>
+            <trans-unit id="label.lastname">
+                <source>label.lastname</source>
+                <target>Nazwisko</target>
+            </trans-unit>
+            <trans-unit id="label.stagename">
+                <source>label.stagename</source>
+                <target>Pseudonim sceniczny</target>
+            </trans-unit>
+            <trans-unit id="label.musicgenre">
+                <source>label.musicgenre</source>
+                <target>Gatunek muzyczny</target>
+            </trans-unit>
+            <trans-unit id="title.performer_list">
+                <source>title.performer_list</source>
+                <target>Lista wykonawców</target>
+            </trans-unit>
+            <trans-unit id="title.concert_list">
+                <source>title.concert_list</source>
+                <target>Lista koncertów</target>
+            </trans-unit>
+            <trans-unit id="title.venue_list">
+                <source>title.venue_list</source>
+                <target>Lista miejsc</target>
+            </trans-unit>
+            <trans-unit id="title.tag_list">
+                <source>title.tag_list</source>
+                <target>Lista tagów</target>
+            </trans-unit>
+            <trans-unit id="title.user_list">
+                <source>title.user_list</source>
+                <target>Lista użytkowników</target>
+            </trans-unit>
+            <trans-unit id="title.reservation_list">
+                <source>title.reservation_list</source>
+                <target>Lista rezerwacji</target>
+            </trans-unit>
+            <trans-unit id="label.city">
+                <source>label.city</source>
+                <target>Miasto</target>
+            </trans-unit>
+            <trans-unit id="label.street">
+                <source>label.street</source>
+                <target>Ulica</target>
+            </trans-unit>
+            <trans-unit id="label.streetnumber">
+                <source>label.streetnumber</source>
+                <target>Numer ulicy</target>
+            </trans-unit>
+            <trans-unit id="action.save">
+                <source>action.save</source>
+                <target>Zapisz</target>
+            </trans-unit>
+            <trans-unit id="action.back_to_list">
+                <source>action.back_to_list</source>
+                <target>Powrót</target>
+            </trans-unit>
+            <trans-unit id="action.show">
+                <source>action.show</source>
+                <target>Pokaż</target>
+            </trans-unit>
+            <trans-unit id="action.add">
+                <source>action.add</source>
+                <target>Dodaj</target>
+            </trans-unit>
+            <trans-unit id="label.email">
+                <source>label.email</source>
+                <target>Adres email</target>
+            </trans-unit>
+            <trans-unit id="label.phone">
+                <source>label.phone</source>
+                <target>Numer telefonu</target>
+            </trans-unit>
+            <trans-unit id="label.roles">
+                <source>label.roles</source>
+                <target>Rola</target>
+            </trans-unit>
+            <trans-unit id="label.birthdate">
+                <source>label.birthdate</source>
+                <target>Data urodzenia</target>
+            </trans-unit>
+            <trans-unit id="label.concert">
+                <source>label.concert</source>
+                <target>Koncert</target>
+            </trans-unit>
+            <trans-unit id="label.user">
+                <source>label.user</source>
+                <target>Użytkownik</target>
+            </trans-unit>
+            <trans-unit id="label.users">
+                <source>label.users</source>
+                <target>Użytkownicy</target>
+            </trans-unit>
+            <trans-unit id="label.concerts">
+                <source>label.concerts</source>
+                <target>Koncerty</target>
+            </trans-unit>
+            <trans-unit id="label.performers">
+                <source>label.performers</source>
+                <target>Wykonawcy</target>
+            </trans-unit>
+            <trans-unit id="label.reservations">
+                <source>label.reservations</source>
+                <target>Rezerwacje</target>
+            </trans-unit>
+            <trans-unit id="label.venues">
+                <source>label.venues</source>
+                <target>Miejsca</target>
+            </trans-unit>
+            <trans-unit id="label.main_page">
+                <source>label.main_page</source>
+                <target>Strona Główna</target>
+            </trans-unit>
+            <trans-unit id="title.admin_panel">
+                <source>title.admin_panel</source>
+                <target>Panel zarządzania stroną</target>
+            </trans-unit>
+            <trans-unit id="label.change_data">
+                <source>label.change_data</source>
+                <target>zmień dane</target>
+            </trans-unit>
+            <trans-unit id="label.change_password">
+                <source>label.change_password</source>
+                <target>zmień hasło</target>
+            </trans-unit>
+            <trans-unit id="label.show_reservations">
+                <source>label.show_reservations</source>
+                <target>zobacz rezerwacje</target>
+            </trans-unit>
+            <trans-unit id="label.logout">
+                <source>label.logout</source>
+                <target>wyloguj się</target>
+            </trans-unit>
+            <trans-unit id="label.sign_up">
+                <source>label.sign_up</source>
+                <target>zarejestruj się</target>
+            </trans-unit>
+            <trans-unit id="title.login">
+                <source>title.login</source>
+                <target>zaloguj się</target>
+            </trans-unit>
+            <trans-unit id="label.book_a_ticket">
+                <source>label.book_a_ticket</source>
+                <target>zarezerwuj bilet</target>
+            </trans-unit>
+            <trans-unit id="label.concert_search">
+                <source>label.concert_search</source>
+                <target>szukaj koncertu</target>
+            </trans-unit>
+            <trans-unit id="label.search">
+                <source>label.search</source>
+                <target>szukaj</target>
+            </trans-unit>
+            <trans-unit id="label.view">
+                <source>label.view</source>
+                <target>zobacz</target>
+            </trans-unit>
+            <trans-unit id="label.password">
+                <source>label.password</source>
+                <target>Hasło</target>
+            </trans-unit>
+            <trans-unit id="action.login">
+                <source>action.login</source>
+                <target>Zaloguj się</target>
+            </trans-unit>
+            <trans-unit id="label.login">
+                <source>label.login</source>
+                <target>Zaloguj się</target>
+            </trans-unit>
+            <trans-unit id="title.user_add">
+                <source>title.user_add</source>
+                <target>Zarejestruj się</target>
+            </trans-unit>
+            <trans-unit id="title.performers">
+                <source>title.user_add</source>
+                <target>Zarejestruj się</target>
+            </trans-unit>
+            <trans-unit id="title.performer_view">
+                <source>title.performer_view</source>
+                <target>Informacje o wykonawcy</target>
+            </trans-unit>
+            <trans-unit id="title.concert_view">
+                <source>title.concert_view</source>
+                <target>Informacje o koncercie</target>
+            </trans-unit>
+            <trans-unit id="title.reservation_add">
+                <source>title.reservation_add</source>
+                <target>Zarezerwuj bilet</target>
+            </trans-unit>
+            <trans-unit id="info.mytickets">
+                <source>info.mytickets</source>
+                <target>Zarezerwuj bilety na ulubione koncerty!</target>
+            </trans-unit>
+            <trans-unit id="message.created_successfully">
+                <source>message.created_successfully</source>
+                <target>Dodano pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="message.updated_successfully">
+                <source>message.updated_successfully</source>
+                <target>Zaktualizowano pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="message.performer_has_concerts">
+                <source>message.performer_has_concerts</source>
+                <target>Wykonawca posiada koncerty!</target>
+            </trans-unit>
+            <trans-unit id="message.deleted_successfully">
+                <source>message.deleted_successfully</source>
+                <target>Usunięto pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="message.venue_has_concerts">
+                <source>message.venue_has_concerts</source>
+                <target>W tym miejscu odbędą się koncerty!</target>
+            </trans-unit>
+            <trans-unit id="message.message.forbidden">
+                <source>message.message.forbidden</source>
+                <target>Dostęp zabroniony!</target>
+            </trans-unit>
+            <trans-unit id="title.user_edit">
+                <source>title.user_edit</source>
+                <target>Zmień dane użytkownika!</target>
+            </trans-unit>
+            <trans-unit id="title.user_edit_pass">
+                <source>title.user_edit_pass</source>
+                <target>Zmień hasło!</target>
+            </trans-unit>
+            <trans-unit id="label.confirm_pass">
+                <source>label.confirm_pass</source>
+                <target>Potwierdz hasło</target>
+            </trans-unit>
+            <trans-unit id="message.empty_list">
+                <source>message.empty_list</source>
+                <target>Lista jest pusta!</target>
+            </trans-unit>
+            <trans-unit id="concert.view">
+                <source>concert.view</source>
+                <target>Informacje o koncercie</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -22,7 +22,7 @@
                 <th><a href="#">{{ 'label.performer_stagename'|trans }}</a></th>
                 <th><a href="#">{{ 'label.venue_name'|trans }}</a></th>
                 <th><a href="#">{{ 'label.tags'|trans }}</a></th>
-                <th><a href="#">label.actions</a></th>
+                <th><a href="#">{{ 'label.actions'|trans }}</a></th>
             </tr>
             </thead>
             <tbody>
@@ -41,8 +41,8 @@
                         {% endfor %}
                     </td>
 
-                    <td><a href="{{ url('concert_edit', {id: concert.id}) }}" class="btn btn-outline-info btn-sm m-2">Edit</a>
-                        <a href="{{ url('concert_delete', {id: concert.id}) }}" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                    <td><a href="{{ url('concert_edit', {id: concert.id}) }}" class="btn btn-outline-info btn-sm m-2">{{ 'action.edit'|trans }}</a>
+                        <a href="{{ url('concert_delete', {id: concert.id}) }}" class="btn btn-outline-danger btn-sm m-2">{{ 'action.delete'|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}

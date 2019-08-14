@@ -24,7 +24,7 @@
     </div>
     {% if back_to_list_path|default(false) %}
         <div class="form-group row float-sm-left">
-            <a href="{{ url(back_to_list_path) }}" class="btn btn-outline-warning">
+            <a href="{{ path(back_to_list_path) }}" class="btn btn-outline-warning">
                 {{ 'action.back_to_list'|trans }}
             </a>
         </div>

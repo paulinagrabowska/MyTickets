@@ -1,9 +1,9 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Hello Concert!{% endblock %}
+{% block title %}{{ 'title.tag_list'|trans }}!{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">{{ 'title.concert_list'|trans }}</h1>
+    <h1 class="text-center">{{ 'title.tag_list'|trans }}</h1>
     {% if tags is defined and tags|length %}
 
         <div class="navigation text-center">
@@ -16,7 +16,7 @@
             <tr class="table-primary">
                 <th>{{  knp_pagination_sortable(tags, 'label.id'|trans, 't.id') }}</th>
                 <th>{{  knp_pagination_sortable(tags, 'label.name'|trans, 't.title') }}</th>
-                <th><a href="#">label.actions</a></th>
+                <th><a href="#">{{ 'label.actions'|trans }}</a></th>
             </tr>
             </thead>
             <tbody>
@@ -24,8 +24,8 @@
                 <tr>
                     <td>{{ tag.id }}</td>
                     <td>{{ tag.title }}</td>
-                    <td><a href="{{ url('tag_edit', {id: tag.id}) }}" class="btn btn-outline-info btn-sm m-2">Edit</a>
-                            <a href="{{ url('tag_delete', {id: tag.id}) }}" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                    <td><a href="{{ url('tag_edit', {id: tag.id}) }}" class="btn btn-outline-info btn-sm m-2">{{ 'action.edit'|trans }}</a>
+                            <a href="{{ url('tag_delete', {id: tag.id}) }}" class="btn btn-outline-danger btn-sm m-2">{{ 'action.delete'|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}

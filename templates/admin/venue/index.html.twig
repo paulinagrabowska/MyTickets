@@ -3,7 +3,7 @@
 {% block title %}Hello Concert!{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">{{ 'title.concert_list'|trans }}</h1>
+    <h1 class="text-center">{{ 'title.venue_list'|trans }}</h1>
     {% if venues is defined and venues|length %}
 
         <div class="navigation text-center">
@@ -19,7 +19,7 @@
                 <th>{{  knp_pagination_sortable(venues, 'label.city'|trans, 'v.city') }}</th>
                 <th>{{  knp_pagination_sortable(venues, 'label.street'|trans, 'v.street') }}</th>
                 <th>{{  knp_pagination_sortable(venues, 'label.streetnumber'|trans, 'v.streetnumber') }}</th>
-                <th><a href="#">label.actions</a></th>
+                <th><a href="#">{{ 'label.actions'|trans }}</a></th>
             </tr>
             </thead>
             <tbody>
@@ -30,9 +30,9 @@
                     <td>{{ venue.city }}</td>
                     <td>{{ venue.street}}</td>
                     <td>{{ venue.streetnumber}}</td>
-                    <td><a href="{{ url('venue_edit', {id: venue.id}) }}" class="btn btn-outline-info btn-sm m-2">Edit</a>
+                    <td><a href="{{ url('venue_edit', {id: venue.id}) }}" class="btn btn-outline-info btn-sm m-2">{{ 'action.edit'|trans }}</a>
                         {% if not venue.concerts|length %}
-                        <a href="{{ url('venue_delete', {id: venue.id}) }}" class="btn btn-outline-danger btn-sm m-2">Delete</a>
+                        <a href="{{ url('venue_delete', {id: venue.id}) }}" class="btn btn-outline-danger btn-sm m-2">{{ 'action.delete'|trans }}</a>
                         {% endif %}
                     </td>
                 </tr>

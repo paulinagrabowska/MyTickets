@@ -1,9 +1,9 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}List of reservations!{% endblock %}
+{% block title %}{{ 'title.reservation_list'|trans }}!{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">{{ 'title.reservations_list'|trans }}</h1>
+    <h1 class="text-center">{{ 'title.reservation_list'|trans }}</h1>
     {% if reservations is defined and reservations|length %}
 
         <div class="navigation text-center">
@@ -18,7 +18,7 @@
                 <th>{{  knp_pagination_sortable(reservations, 'label.date'|trans, 'r.date') }}</th>
                 <th>{{  knp_pagination_sortable(reservations, 'label.concert'|trans, 'r.concert') }}</th>
                 <th>{{  knp_pagination_sortable(reservations, 'label.user'|trans, 'r.user') }}</th>
-                <th><a href="#">label.actions</a></th>
+                <th><a href="#">{{ 'label.actions'|trans }}</a></th>
             </tr>
             </thead>
             <tbody>

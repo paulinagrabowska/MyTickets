@@ -29,6 +29,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 
 class UserController extends Controller
+
 {
     /**
      * @param User $user
@@ -112,7 +113,6 @@ class UserController extends Controller
     {
         if ($user !== $this->getUser()) {
             $this->addFlash('warning', 'message.forbidden');
-
             return $this->redirectToRoute('user_view', ['id' => $user->getId()]);
         } else {
             $form = $this->createForm(UserPasswordType::class, $user, ['method' => 'PUT']);

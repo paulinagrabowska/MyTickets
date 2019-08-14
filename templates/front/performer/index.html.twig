@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FrontEndController!{% endblock %}
+{% block title %}{{ 'title.performer_list'|trans }}{% endblock %}
 
 {% block body %}
 <div class="container-fluid center">
-    <h1 class="text-center">{{ 'title.performers_list'|trans }}</h1>
+    <h1 class="text-center">{{ 'title.performer_list'|trans }}</h1>
     {% if performers is defined and performers|length %}
 
         <div class="navigation text-center">
@@ -26,7 +26,7 @@
                     </ul>
                     <div class="card-footer text-muted text-center">
                         <a href="{{ url('performer_view', {id: performer.id}) }}" class="btn btn-info btn-sm " title="{{ 'performer.view'|trans }}">
-                            {{ 'performer.view'|trans }}
+                            {{ 'label.view'|trans }}
                         </a>
 
                     </div>

@@ -6,24 +6,25 @@
 
 {% block body %}
     <div class="container ">
-        <h1 class="text-center">{{ 'title.performer_view'|trans({'%id%': performer.id|default('')}) }}</h1>
+        <h1 class="text-center text-info">{{ 'title.performer_view'|trans({'%id%': performer.id|default('')}) }}</h1>
         {% if performer is defined and performer|length %}
             <div class="list-group m-lg-2">
                 <a href="#" class="list-group-item list-group-item-action active">
                     {{ 'label.stagename'|trans }}
                 </a>
-                <a href="#" class="list-group-item list-group-item-action disabled">{{  performer.stagename }}</a>
+                <a href="#" class="list-group-item list-group-item-action disabled text-info font-weight-bold">{{  performer.stagename }}</a>
                 <a href="#" class="list-group-item list-group-item-action">{{ 'label.id'|trans }}</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.id }}</a>
                 <a href="#" class="list-group-item list-group-item-action">{{ 'label.firstname'|trans }}</a>
-                <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.firstname }}}</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.firstname }}</a>
                 <a href="#" class="list-group-item list-group-item-action">{{ 'label.lastname'|trans }}</a>
-                <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.lastname }}}</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.lastname }}</a>
                 <a href="#" class="list-group-item list-group-item-action">{{ 'label.info'|trans }}</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">{{  performer.info }}</a>
                 <a href="#" class="list-group-item list-group-item-action">{{ 'label.musicgenre'|trans }}</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">{{  performer.musicgenre}}</a>
             </div>
+
         {% else %}
             <p>
                 {% include 'default/_single_flash_message.html.twig' with {
@@ -33,6 +34,6 @@
             </p>
         {% endif %}
 
-        <a href="{{ path('performer_front_show') }}" class="btn btn-outline-info m-2">Go back</a>
+        <a href="{{ path('performer_front_show') }}" class="btn btn-outline-info m-2">{{ 'action.back_to_list'|trans }}</a>
     </div>
 {% endblock %}

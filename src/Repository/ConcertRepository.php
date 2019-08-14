@@ -41,17 +41,19 @@ class ConcertRepository extends ServiceEntityRepository
      * Search concerts.
      *
      * @param $value
-     * @return QueryBuilder
+     * @return \Doctrine\ORM\Query
      */
 
-    public function search($value): QueryBuilder
+    public function search($value)
     {
         $qb = $this->getOrCreateQueryBuilder();
         return $qb->leftJoin('c.tags', 't')
             ->where($qb->expr()->like('c.name', ':value'))
             ->orWhere($qb->expr()->like('c.info', ':value'))
             ->orWhere($qb->expr()->like('t.title', ':value'))
-            ->setParameter('value','%'.$value.'%');
+            ->setParameter('value','%'.$value.'%')
+            ->getQuery()
+            ->getResult();
     }
 
     /**

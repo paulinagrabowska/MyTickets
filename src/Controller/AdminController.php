@@ -33,11 +33,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminController extends Controller
 {
+
     /**
      * @Route("/", name="admin_main_page")
      */
     public function index()
     {
+
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
         ]);
