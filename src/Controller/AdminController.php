@@ -23,6 +23,7 @@ use App\Repository\VenueRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -107,11 +108,28 @@ class AdminController extends Controller
      */
     public function addPerformer(Request $request, PerformerRepository $repository): Response
     {
+
         $performer = new Performer();
         $form = $this->createForm(PerformerType::class, $performer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var UploadedFile $file
+             */
+            $file=$request->files->get('performer')['image'];
+            //okreslamy miejsce zapisu pliku nadane wczesniej w services.yaml
+            if ($file) {
+                $uploads_directory = $this->getParameter('uploads_directory');
+
+                $filename = md5(uniqid()). '.' . $file->guessClientExtension();
+                //przenosimy plik do wybranego miejsca zapisu
+                $file->move(
+                    $uploads_directory,
+                    $filename
+                );
+                $performer->setImage($filename);
+            }
             $repository->save($performer);
             $this->addFlash('success', 'message.created_successfully');
 
@@ -145,6 +163,22 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var UploadedFile $file
+             */
+            $file=$request->files->get('performer')['image'];
+            //okreslamy miejsce zapisu pliku nadane wczesniej w services.yaml
+            if ($file) {
+                $uploads_directory = $this->getParameter('uploads_directory');
+
+                $filename = md5(uniqid()). '.' . $file->guessClientExtension();
+                //przenosimy plik do wybranego miejsca zapisu
+                $file->move(
+                    $uploads_directory,
+                    $filename
+                );
+                $performer->setImage($filename);
+            }
             $repository->save($performer);
             $this->addFlash('success', 'message.updated_successfully');
 

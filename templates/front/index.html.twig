@@ -18,6 +18,9 @@
                     <h4 class="card-title text-center">{{ concert.name }}</h4>
                     <p class="card-text">{{ concert.info }}</p>
                 </div>
+                {% if  concert.performer.image != null%}
+                    <img class="card-img-top img-thumbnail" src="{{ asset('uploads/' ~ concert.performer.image) }}">
+                {% endif %}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item text-center text-warning font-weight-bold text-uppercase">{{ concert.performer.stagename }}</li>
                 </ul>

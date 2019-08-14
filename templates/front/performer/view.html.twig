@@ -13,8 +13,11 @@
                     {{ 'label.stagename'|trans }}
                 </a>
                 <a href="#" class="list-group-item list-group-item-action disabled text-info font-weight-bold">{{  performer.stagename }}</a>
-                <a href="#" class="list-group-item list-group-item-action">{{ 'label.id'|trans }}</a>
-                <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.id }}</a>
+                {% if performer.image != null %}
+                    <a href="#" class="list-group-item list-group-item-action disabled">
+                        <img class="card-img-top img-thumbnail rounded mx-auto d-block" style="height: 200px; width: 300px; display: block;" src="{{ asset('uploads/' ~ performer.image) }}">
+                    </a>
+                {% endif %}
                 <a href="#" class="list-group-item list-group-item-action">{{ 'label.firstname'|trans }}</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.firstname }}</a>
                 <a href="#" class="list-group-item list-group-item-action">{{ 'label.lastname'|trans }}</a>
@@ -24,7 +27,6 @@
                 <a href="#" class="list-group-item list-group-item-action">{{ 'label.musicgenre'|trans }}</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">{{  performer.musicgenre}}</a>
             </div>
-
         {% else %}
             <p>
                 {% include 'default/_single_flash_message.html.twig' with {

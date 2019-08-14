@@ -13,8 +13,11 @@
                 {{ 'label.name'|trans }}
             </a>
             <a href="#" class="list-group-item list-group-item-action disabled text-warning font-weight-bold">{{  concert.name }}</a>
-            <a href="#" class="list-group-item list-group-item-action">{{ 'label.id'|trans }}</a>
-            <a href="#" class="list-group-item list-group-item-action disabled">{{ concert.id }}</a>
+            {% if concert.performer.image != null %}
+                <a href="#" class="list-group-item list-group-item-action disabled">
+                    <img class="card-img-top img-thumbnail rounded mx-auto d-block" style="height: 200px; width: 300px; display: block;" src="{{ asset('uploads/' ~ concert.performer.image) }}">
+                </a>
+            {% endif %}
             <a href="#" class="list-group-item list-group-item-action">{{ 'label.date'|trans }}</a>
             <a href="#" class="list-group-item list-group-item-action disabled">{{ concert.date|date('Y/m/d') }}</a>
             <a href="#" class="list-group-item list-group-item-action">{{ 'label.info'|trans }}</a>
