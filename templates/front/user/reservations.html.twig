@@ -30,7 +30,7 @@
                         <td>{{ reservation.concert }}</td>
                         <td>{{ reservation.user}}</td>
                         <td>
-                            <a href="#" class="btn btn-outline-danger btn-sm m-2">{{ 'action.delete'|trans }}</a>
+                            <a href="{{ url('user_reservation_delete', {id: reservation.id}) }}" class="btn btn-outline-danger btn-sm m-2">{{ 'action.delete'|trans }}</a>
                         </td>
                     </tr>
                 {% endfor %}

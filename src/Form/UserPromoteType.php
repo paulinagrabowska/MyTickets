@@ -60,13 +60,14 @@ class UserPromoteType extends AbstractType
             ->add('roles',
                 ChoiceType::class,
                 [
-                    'label' => 'label.role',
+                    'label' => 'label.roles',
                     'multiple' => true,
                     'expanded' => true,
                     'choices' => [
                         'ADMIN' => 'ROLE_ADMIN',
                         'USER' => 'ROLE_USER'
                     ],
+                    //wynik funkcji ustawia choice attribute na disabled, kiedy wartosc przyjmuje 'ROLE_USER'
                     'choice_attr' => function($val) {
                         return ($val == 'ROLE_USER' ? ['disabled' => 'disabled'] : []);
                     }

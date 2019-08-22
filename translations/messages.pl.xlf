@@ -289,6 +289,74 @@
                 <source>concert.view</source>
                 <target>Informacje o koncercie</target>
             </trans-unit>
+            <trans-unit id="title.reservation_delete">
+                <source>title.reservation_delete</source>
+                <target>Usuń rezerwację</target>
+            </trans-unit>
+            <trans-unit id="title.concert_add">
+                <source>title.concert_add</source>
+                <target>Dodaj koncert</target>
+            </trans-unit>
+            <trans-unit id="title.concert_edit">
+                <source>title.concert_edit</source>
+                <target>Edytuj koncert</target>
+            </trans-unit>
+            <trans-unit id="title.concert_delete">
+                <source>title.concert_delete</source>
+                <target>Usuń koncert</target>
+            </trans-unit>
+            <trans-unit id="title.performer_add">
+                <source>title.performer_add</source>
+                <target>Dodaj wykonawcę</target>
+            </trans-unit>
+            <trans-unit id="title.performer_edit">
+                <source>title.performer_edit</source>
+                <target>Edytuj wykonawcę</target>
+            </trans-unit>
+            <trans-unit id="title.performer_delete">
+                <source>title.performer_delete</source>
+                <target>Usuń wykonawcę</target>
+            </trans-unit>
+            <trans-unit id="label.image">
+                <source>label.image</source>
+                <target>Zdjęcie</target>
+            </trans-unit>
+            <trans-unit id="title.venue_add">
+                <source>title.venue_add</source>
+                <target>Dodaj miejsce</target>
+            </trans-unit>
+            <trans-unit id="title.venue_edit">
+                <source>title.venue_edit</source>
+                <target>Edytuj miejsce</target>
+            </trans-unit>
+            <trans-unit id="title.venue_delete">
+                <source>title.venue_delete</source>
+                <target>Usuń miejsce</target>
+            </trans-unit>
+            <trans-unit id="title.tag_add">
+                <source>title.tag_add</source>
+                <target>Dodaj tag</target>
+            </trans-unit>
+            <trans-unit id="title.tag_edit">
+                <source>title.tag_edit</source>
+                <target>Edytuj tag</target>
+            </trans-unit>
+            <trans-unit id="title.tag_delete">
+                <source>title.tag_delete</source>
+                <target>Usuń tag</target>
+            </trans-unit>
+            <trans-unit id="title.user_promote">
+                <source>title.user_promote</source>
+                <target>Promuj użytkownika</target>
+            </trans-unit>
+            <trans-unit id="title.user_delete">
+                <source>title.user_delete</source>
+                <target>Usuń użytkownika</target>
+            </trans-unit>
+            <trans-unit id="message.user_has_reservations">
+                <source>message.user_has_reservations</source>
+                <target>Użytkownik posiada rezerwacje!</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

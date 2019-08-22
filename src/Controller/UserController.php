@@ -6,6 +6,7 @@ use App\Entity\Concert;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\PerformerType;
+use App\Form\ReservationType;
 use App\Form\UserDataType;
 use App\Form\UserPasswordType;
 use App\Form\UserType;
@@ -40,10 +41,19 @@ class UserController extends Controller
      *     name="user_view",
      *     requirements={"id": "[1-9]\d*"},
      * )
+     *
+     * @IsGranted(
+     *     "MANAGE",
+     *     subject="user",
+     * )
      */
     public function user_view(User $user)
     {
-        $user= $this->getUser();
+//        if ($user !== $this->getUser()) {
+//            $this->addFlash('warning', 'message.item_not_found');
+//
+//            return $this->redirectToRoute('main_page');
+//        }
 
         return $this->render('front/user/profile.html.twig', [
             'user' => $user ,
@@ -66,14 +76,19 @@ class UserController extends Controller
      *     requirements={"id": "[1-9]\d*"},
      *     methods={"GET", "PUT"},
      * )
+     *
+     * @IsGranted(
+     *     "MANAGE",
+     *     subject="user",
+     * )
      */
     public function userChangeData(User $user, UserRepository $repository, Request $request): Response
     {
-        if ($user !== $this->getUser()) {
-            $this->addFlash('warning', 'message.forbidden');
-
-            return $this->redirectToRoute('user_view', ['id' => $user->getId()]);
-        } else {
+//        if ($user !== $this->getUser()) {
+//            $this->addFlash('warning', 'message.forbidden');
+//
+//            return $this->redirectToRoute('user_view', ['id' => $user->getId()]);
+//        } else {
             $form = $this->createForm(UserDataType::class, $user, ['method' => 'PUT']);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -82,7 +97,7 @@ class UserController extends Controller
 
                 return $this->redirectToRoute('user_view', ['id' => $user->getId()]);
             }
-        }
+//        }
 
         return $this->render('front/user/change_data.html.twig',
             [
@@ -93,7 +108,7 @@ class UserController extends Controller
 
 
     /**
-     * Change user data.
+     * Change user password.
      *
      * @param User $user
      * @param UserRepository $repository
@@ -108,13 +123,18 @@ class UserController extends Controller
      *     requirements={"id": "[1-9]\d*"},
      *     methods={"GET", "PUT"},
      * )
+     *
+     * @IsGranted(
+     *     "MANAGE",
+     *     subject="user",
+     * )
      */
     public function userChangePass(User $user, UserRepository $repository, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
-        if ($user !== $this->getUser()) {
-            $this->addFlash('warning', 'message.forbidden');
-            return $this->redirectToRoute('user_view', ['id' => $user->getId()]);
-        } else {
+//        if ($user !== $this->getUser()) {
+//            $this->addFlash('warning', 'message.forbidden');
+//            return $this->redirectToRoute('user_view', ['id' => $user->getId()]);
+//        } else {
             $form = $this->createForm(UserPasswordType::class, $user, ['method' => 'PUT']);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -126,7 +146,7 @@ class UserController extends Controller
                 $this->addFlash('success', 'message.updated_successfully');
                 return $this->redirectToRoute('user_view', ['id' => $user->getId()]);
             }
-        }
+//        }
 
         return $this->render('front/user/change_pass.html.twig',
             [
@@ -160,8 +180,47 @@ class UserController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     * @param Reservation $reservation
+     * @param ReservationRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *   "/reservation/{id}/delete",
+     *   methods={"GET", "DELETE"},
+     *   requirements={"id": "[1-9]\d*"},
+     *   name="user_reservation_delete",
+     * )
+     * @IsGranted(
+     *     "MANAGE",
+     *     subject="reservation",
+     * )
+     */
+    public function deleteReservation(Request $request, Reservation $reservation, ReservationRepository $repository): Response
+    {
+        $form = $this->createForm(ReservationType::class, $reservation, ['method' => 'DELETE']);
+        $form->handleRequest($request);
 
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->delete($reservation);
+            $this->addFlash('success', 'message.deleted_successfully');
 
+            return $this->redirectToRoute('main_page');
+        }
 
+        return $this->render(
+            'front/reservation/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'reservation' => $reservation,
+            ]
+        );
+    }
 }

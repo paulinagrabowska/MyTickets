@@ -59,6 +59,7 @@ class PerformerType extends AbstractType
                     FileType::class,
                 [
                     'label' => 'label.image',
+                    'mapped' => false,
                 ])
         ;
     }

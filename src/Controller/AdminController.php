@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Entity\Venue;
 use App\Form\ConcertType;
 use App\Form\PerformerType;
+use App\Form\ReservationType;
 use App\Form\TagType;
 use App\Form\UserPromoteType;
 use App\Form\UserType;
@@ -685,7 +686,11 @@ class AdminController extends Controller
 
     public function deleteUser(Request $request, User $user, UserRepository $repository): Response
     {
+        if ($user->getReservations()->count()) {
+            $this->addFlash('warning', 'message.user_has_reservations');
 
+            return $this->redirectToRoute('user_show');
+        }
         $form = $this->createForm(UserType::class, $user, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
@@ -730,6 +735,7 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //upewniamy sie, ze każdy użytkownik ma role user
             if(!in_array('ROLE_USER', $user['roles']))
                 $user['roles'][] = 'ROLE_USER';
             $repository->save($user);
@@ -768,6 +774,47 @@ class AdminController extends Controller
             ['reservations' => $reservations]
         );
     }
+
+    /**
+     * @param Request $request
+     * @param Reservation $reservation
+     * @param ReservationRepository $repository
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *   "/reservation/{id}/delete",
+     *   methods={"GET", "DELETE"},
+     *   requirements={"id": "[1-9]\d*"},
+     *   name="reservation_delete",
+     * )
+     */
+    public function deleteReservation(Request $request, Reservation $reservation, ReservationRepository $repository): Response
+    {
+        $form = $this->createForm(ReservationType::class, $reservation, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->delete($reservation);
+            $this->addFlash('success', 'message.deleted_successfully');
+
+            return $this->redirectToRoute('reservation_show');
+        }
+
+        return $this->render(
+            'admin/reservation/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'reservation' => $reservation,
+            ]
+        );
+    }
+
 
 
 }

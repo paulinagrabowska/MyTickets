@@ -9,9 +9,11 @@
 
 }
 
-div.container-fluid.center {
-    margin: 0 auto;
-    max-width: 95%;
+.container-fluid {
+    /*margin: 0 auto;*/
+    /*max-width: 95%;*/
+    padding-right: 0;
+    padding-left: 0;
 
 }
 
@@ -21,5 +23,9 @@ h2.heading {
     padding: 2rem;
     margin: 1rem;
     color: white;
+}
+
+footer {
+    margin-top: 10%;
 }
 

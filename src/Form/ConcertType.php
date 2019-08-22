@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Concert;
+use App\Entity\Performer;
 use App\Entity\Tag;
+use App\Entity\Venue;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -63,11 +65,23 @@ class ConcertType extends AbstractType
             ->add('reservation_limit',
                 NumberType::class,
                 [
-                    'label' => 'label.reservationlimit',
+                    'label' => 'label.limit',
                     'required' => true,
                 ])
-            ->add('performer')
-            ->add('venue')
+            ->add('performer',
+                EntityType::class,
+                [
+                    'class' => Performer::class,
+                    'label' => 'label.performer_stagename',
+                    'required' => true,
+                ])
+            ->add('venue',
+                EntityType::class,
+                [
+                    'class' => Venue::class,
+                    'label' => 'label.venue_name',
+                    'required' => true,
+                ])
             ->add(
             'tags',
             EntityType::class,
