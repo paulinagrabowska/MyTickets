@@ -40,6 +40,10 @@ class UserVoter extends Voter
      *
      * @return bool True if the attribute and subject are supported, false otherwise
      */
+    // sprawdza, czy sprawdzane uprawnienia istnieją
+    // atribute - to co staramy sie zrobic (view, edit, delete)
+    // subject - jaki obiekt staramy sie zmienić (Post, Task, User)
+    // musi zwracać true, żeby przejsc do kolejnej funkcji
     protected function supports($attribute, $subject)
     {
         return in_array($attribute, ['MANAGE'])

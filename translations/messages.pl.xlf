@@ -357,6 +357,15 @@
                 <source>message.user_has_reservations</source>
                 <target>Użytkownik posiada rezerwacje!</target>
             </trans-unit>
+            <trans-unit id="title.access_denied">
+                <source>title.access_denied</source>
+                <target>Wstęp wzbroniony!</target>
+            </trans-unit>
+            <trans-unit id="message.access_denied">
+                <source>message.access_denied</source>
+                <target>Nie posiadasz uprawnień do zobaczenia tej strony!</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

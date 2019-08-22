@@ -4,29 +4,34 @@
 
 namespace App\Security;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class AccessDeniedHandler.
  */
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
-    /**
-     * Handle action.
-     *
-     * @param Request               $request
-     * @param AccessDeniedException $accessDeniedException
-     *
-     * @return Response|null
-     */
+
+    private $router;
+
+
+    public function __construct(RouterInterface $router)
+    {
+        $this->router = $router;
+
+    }
+
     public function handle(Request $request, AccessDeniedException $accessDeniedException)
     {
 
-        $content = 'You dont have access to visit this page.';
+        $url = $this->router->generate('access_denied');
 
-        return new Response($content, 403);
+        return new RedirectResponse($url);
     }
 }

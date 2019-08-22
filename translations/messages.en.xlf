@@ -358,6 +358,14 @@
                 <source>message.user_has_reservations</source>
                 <target>User has reservations!</target>
             </trans-unit>
+            <trans-unit id="title.access_denied">
+                <source>title.access_denied</source>
+                <target>Access denied!</target>
+            </trans-unit>
+            <trans-unit id="message.access_denied">
+                <source>message.access_denied</source>
+                <target>You dont have access to this page!</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
