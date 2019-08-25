@@ -365,7 +365,10 @@
                 <source>message.access_denied</source>
                 <target>Nie posiadasz uprawnień do zobaczenia tej strony!</target>
             </trans-unit>
-
+            <trans-unit id="message.tickets_not_available">
+                <source>message.tickets_not_available</source>
+                <target>Brak biletów!</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

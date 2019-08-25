@@ -23,6 +23,8 @@ class Tag
     const NUMBER_OF_ITEMS = 6;
 
     /**
+     * Primary key.
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -30,6 +32,8 @@ class Tag
     private $id;
 
     /**
+     * Tag Title.
+     *
      * @ORM\Column(type="string", length=30)
      *
      * @Assert\NotBlank
@@ -41,6 +45,8 @@ class Tag
     private $title;
 
     /**
+     * Concerts.
+     *
      * @ORM\ManyToMany(targetEntity="App\Entity\Concert", mappedBy="tags")
      */
 
@@ -51,16 +57,32 @@ class Tag
         $this->concerts = new ArrayCollection();
     }
 
+    /**
+     * Getter for id.
+     *
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Getter for title.
+     *
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * Setter for title.
+     *
+     * @param string $title
+     * @return Tag
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -69,6 +91,8 @@ class Tag
     }
 
     /**
+     * Getter for concerts.
+     *
      * @return Collection|Concert[]
      */
     public function getConcerts(): Collection
@@ -76,6 +100,12 @@ class Tag
         return $this->concerts;
     }
 
+    /**
+     * Add concert.
+     *
+     * @param Concert $concert
+     * @return Tag
+     */
     public function addConcert(Concert $concert): self
     {
         if (!$this->concerts->contains($concert)) {
@@ -86,6 +116,12 @@ class Tag
         return $this;
     }
 
+    /**
+     * Remove concert.
+     *
+     * @param Concert $concert
+     * @return Tag
+     */
     public function removeConcert(Concert $concert): self
     {
         if ($this->concerts->contains($concert)) {
@@ -96,8 +132,13 @@ class Tag
         return $this;
     }
 
+    /**
+     * toString method.
+     *
+     * @return string|null
+     */
     public function __toString()
     {
-        return $this->title;
+        return $this->getTitle();
     }
 }

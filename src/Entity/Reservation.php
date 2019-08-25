@@ -21,6 +21,8 @@ class Reservation
     const NUMBER_OF_ITEMS = 6;
 
     /**
+     * Primary key.
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -28,32 +30,53 @@ class Reservation
     private $id;
 
     /**
+     * Reservation date.
+     *
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     *
      */
     private $date;
 
     /**
+     * User.
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservations")
      */
     private $user;
 
     /**
+     * Concert.
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Concert", inversedBy="reservations")
      */
     private $concert;
 
+    /**
+     * Getter for id.
+     *
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Getter for date.
+     *
+     * @return \DateTimeInterface|null
+     */
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
+    /**
+     * Setter for date.
+     *
+     * @param \DateTimeInterface $date
+     * @return Reservation
+     */
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
@@ -61,11 +84,22 @@ class Reservation
         return $this;
     }
 
+    /**
+     * Getter for user.
+     *
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * Setter for user.
+     *
+     * @param User|null $user
+     * @return Reservation
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -73,18 +107,27 @@ class Reservation
         return $this;
     }
 
+    /**
+     * Getter for concert.
+     *
+     * @return Concert|null
+     */
     public function getConcert(): ?Concert
     {
         return $this->concert;
     }
 
+    /**
+     * Setetr for concert.
+     *
+     * @param Concert|null $concert
+     * @return Reservation
+     */
     public function setConcert(?Concert $concert): self
     {
         $this->concert = $concert;
 
         return $this;
     }
-    
-
 
 }

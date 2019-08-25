@@ -155,6 +155,8 @@ class User implements UserInterface
     private $phone;
 
     /**
+     * Reservations.
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="user")
      */
     private $reservations;
@@ -348,6 +350,8 @@ class User implements UserInterface
     }
 
     /**
+     * toString method
+     *
      * @return string
      */
     public function __toString()
@@ -365,6 +369,12 @@ class User implements UserInterface
         return $this->reservations;
     }
 
+    /**
+     * Add reservation.
+     *
+     * @param Reservation $reservation
+     * @return User
+     */
     public function addReservation(Reservation $reservation): self
     {
         if (!$this->reservations->contains($reservation)) {
@@ -375,6 +385,12 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * Remove reservation.
+     *
+     * @param Reservation $reservation
+     * @return User
+     */
     public function removeReservation(Reservation $reservation): self
     {
         if ($this->reservations->contains($reservation)) {

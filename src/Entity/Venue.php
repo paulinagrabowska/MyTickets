@@ -24,6 +24,8 @@ class Venue
     const NUMBER_OF_ITEMS = 6;
 
     /**
+     * Primary key.
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -31,6 +33,8 @@ class Venue
     private $id;
 
     /**
+     * Name.
+     *
      * @ORM\Column(type="string", length=45)
      * @Assert\NotBlank
      * @Assert\Length(
@@ -41,6 +45,8 @@ class Venue
     private $name;
 
     /**
+     * City.
+     *
      * @ORM\Column(type="string", length=30)
      *
      * @Assert\NotBlank
@@ -52,6 +58,8 @@ class Venue
     private $city;
 
     /**
+     * Street.
+     *
      * @ORM\Column(type="string", length=45)
      *
      * @Assert\NotBlank
@@ -63,6 +71,8 @@ class Venue
     private $street;
 
     /**
+     * Street number.
+     *
      * @ORM\Column(type="integer")
      *
      * @Assert\NotBlank
@@ -73,6 +83,8 @@ class Venue
     private $streetnumber;
 
     /**
+     * Concerts.
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Concert", mappedBy="venue")
      *
      * @Assert\NotBlank
@@ -84,17 +96,32 @@ class Venue
         $this->concerts = new ArrayCollection();
     }
 
-
+    /**
+     * Getter for venue id.
+     *
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Getter for venue name.
+     *
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * Setter for venue name.
+     *
+     * @param string $name
+     * @return Venue
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -102,11 +129,22 @@ class Venue
         return $this;
     }
 
+    /**
+     * Getter for venue city.
+     *
+     * @return string|null
+     */
     public function getCity(): ?string
     {
         return $this->city;
     }
 
+    /**
+     * Setter for venue city.
+     *
+     * @param string $city
+     * @return Venue
+     */
     public function setCity(string $city): self
     {
         $this->city = $city;
@@ -114,11 +152,22 @@ class Venue
         return $this;
     }
 
+    /**
+     * Getter for venue street.
+     *
+     * @return string|null
+     */
     public function getStreet(): ?string
     {
         return $this->street;
     }
 
+    /**
+     * Setter for venue street.
+     *
+     * @param string $street
+     * @return Venue
+     */
     public function setStreet(string $street): self
     {
         $this->street = $street;
@@ -126,11 +175,22 @@ class Venue
         return $this;
     }
 
+    /**
+     * Getter for venue street number.
+     *
+     * @return int|null
+     */
     public function getStreetnumber(): ?int
     {
         return $this->streetnumber;
     }
 
+    /**
+     * Setter for venue street number.
+     *
+     * @param int $streetnumber
+     * @return Venue
+     */
     public function setStreetnumber(int $streetnumber): self
     {
         $this->streetnumber = $streetnumber;
@@ -138,11 +198,22 @@ class Venue
         return $this;
     }
 
+    /**
+     * Getter for concerts.
+     *
+     * @return Collection
+     */
     public function getConcerts(): Collection
     {
         return $this->concerts;
     }
 
+    /**
+     * Setter for concerts.
+     *
+     * @param Concert|null $concerts
+     * @return Venue
+     */
     public function setConcerts(?Concert $concerts): self
     {
         $this->concerts = $concerts;
@@ -156,6 +227,12 @@ class Venue
         return $this;
     }
 
+    /**
+     * Add a concert.
+     *
+     * @param Concert $concert
+     * @return Venue
+     */
     public function addConcert(Concert $concert): self
     {
         if (!$this->concerts->contains($concert)) {
@@ -166,6 +243,12 @@ class Venue
         return $this;
     }
 
+    /**
+     * Remove a concert.
+     *
+     * @param Concert $concert
+     * @return Venue
+     */
     public function removeConcert(Concert $concert): self
     {
         if ($this->concerts->contains($concert)) {
@@ -179,8 +262,13 @@ class Venue
         return $this;
     }
 
+    /**
+     * To string method.
+     *
+     * @return string|null
+     */
     public function __toString()
     {
-        return $this->name;
+        return $this->getName();
     }
 }

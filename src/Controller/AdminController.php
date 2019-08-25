@@ -47,36 +47,15 @@ class AdminController extends Controller
         ]);
     }
 
-    /**
-     * Show concerts.
-     *
-     * @param ConcertRepository $repository
-     * @param PaginatorInterface $paginator
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/concert", name="concert_show")
-     */
-    public function concert(ConcertRepository $repository, PaginatorInterface $paginator, Request $request)
-    {
-        $concerts = $paginator->paginate(
-            $repository->queryAll(),
-            $request->query->getInt('page', 1),
-            Concert::NUMBER_OF_ITEMS
-        );
-
-        return $this->render(
-            'admin/concert/index.html.twig',
-            ['concerts' => $concerts]
-        );
-    }
+    /*PERFORMERS*/
 
     /**
-     * Show performers.
+     * Show performers in admin panel.
      *
      * @param PerformerRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @Route("/performer", name="performer_show")
      */
     public function performer(PerformerRepository $repository, PaginatorInterface $paginator, Request $request)
@@ -144,6 +123,8 @@ class AdminController extends Controller
     }
 
     /**
+     * Edit a performer.
+     *
      * @param Request $request
      * @param Performer $performer
      * @param PerformerRepository $repository
@@ -196,6 +177,8 @@ class AdminController extends Controller
     }
 
     /**
+     * Delete a performer.
+     *
      * @param Request $request
      * @param Performer $performer
      * @param PerformerRepository $repository
@@ -241,6 +224,30 @@ class AdminController extends Controller
         );
     }
 
+    /*CONCERTS*/
+
+    /**
+     * Show concerts in admin panel.
+     *
+     * @param ConcertRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     * @Route("/concert", name="concert_show")
+     */
+    public function concert(ConcertRepository $repository, PaginatorInterface $paginator, Request $request)
+    {
+        $concerts = $paginator->paginate(
+            $repository->queryAll(),
+            $request->query->getInt('page', 1),
+            Concert::NUMBER_OF_ITEMS
+        );
+
+        return $this->render(
+            'admin/concert/index.html.twig',
+            ['concerts' => $concerts]
+        );
+    }
 
     /**
      * Add a new concert.
@@ -356,8 +363,10 @@ class AdminController extends Controller
         );
     }
 
+    /*VENUES*/
+
     /**
-     * Show venues.
+     * Show venues in admin panel.
      *
      * @param VenueRepository $repository
      * @param PaginatorInterface $paginator
@@ -380,7 +389,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Add Venue.
+     * Add a new venue.
      *
      * @param Request $request
      * @param VenueRepository $repository
@@ -502,6 +511,8 @@ class AdminController extends Controller
     /*TAGS*/
 
     /**
+     * Show tags in admin panel.
+     *
      * @param TagRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
@@ -597,7 +608,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Delete tag.
+     * Delete a tag.
      *
      * @param Request $request
      * @param Tag $tag
@@ -643,7 +654,7 @@ class AdminController extends Controller
     /*USERS*/
 
     /**
-     * Show all users.
+     * Show all users in admin panel.
      *
      * @param UserRepository $repository
      * @param PaginatorInterface $paginator
@@ -667,7 +678,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Delete user.
+     * Delete a user.
      *
      * @param Request $request
      * @param User $user
@@ -715,6 +726,8 @@ class AdminController extends Controller
     }
 
     /**
+     * Promote user.
+     *
      * @param Request $request
      * @param User $user
      * @param UserRepository $repository
@@ -735,9 +748,8 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //upewniamy sie, ze każdy użytkownik ma role user
-            if(!in_array('ROLE_USER', $user['roles']))
-                $user['roles'][] = 'ROLE_USER';
+            if(!in_array('ROLE_USER', $user->getRoles()))
+                $user->setRoles(['ROLE_USER']);
             $repository->save($user);
             $this->addFlash('success', 'message.updated_successfully');
 
@@ -754,6 +766,8 @@ class AdminController extends Controller
     }
 
     /**
+     * Show reservations in admin panel.
+     *
      * @param ReservationRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
@@ -776,6 +790,8 @@ class AdminController extends Controller
     }
 
     /**
+     * Delete a reservation.
+     *
      * @param Request $request
      * @param Reservation $reservation
      * @param ReservationRepository $repository
@@ -814,7 +830,4 @@ class AdminController extends Controller
             ]
         );
     }
-
-
-
 }

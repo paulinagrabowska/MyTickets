@@ -366,6 +366,10 @@
                 <source>message.access_denied</source>
                 <target>You dont have access to this page!</target>
             </trans-unit>
+            <trans-unit id="message.tickets_not_available">
+                <source>message.tickets_not_available</source>
+                <target>Tickets are out of stock!</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

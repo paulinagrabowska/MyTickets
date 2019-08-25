@@ -17,6 +17,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ReservationRepository extends ServiceEntityRepository
 {
+    /**
+     * ReservationRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Reservation::class);
@@ -28,7 +32,7 @@ class ReservationRepository extends ServiceEntityRepository
      */
 
     /**
-     * Query tasks by author.
+     * Query users reservations.
      *
      * @param \App\Entity\User|null $user User entity
      *
@@ -45,6 +49,12 @@ class ReservationRepository extends ServiceEntityRepository
 
         return $queryBuilder;
     }
+
+    /**
+     * Query all records.
+     *
+     * @return QueryBuilder
+     */
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()

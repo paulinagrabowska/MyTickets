@@ -250,7 +250,7 @@ class Performer
      * Setter for Musicgenre.
      *
      * @param string $musicgenre
-     * @return Performer\
+     * @return Performer
      */
 
     public function setMusicgenre(string $musicgenre): self
@@ -261,6 +261,8 @@ class Performer
     }
 
     /**
+     * Getter for concerts.
+     *
      * @return Collection|Concert[]
      */
     public function getConcerts(): Collection
@@ -268,6 +270,12 @@ class Performer
         return $this->concerts;
     }
 
+    /**
+     * Add a concert.
+     *
+     * @param Concert $concert
+     * @return Performer
+     */
     public function addConcert(Concert $concert): self
     {
         if (!$this->concerts->contains($concert)) {
@@ -278,6 +286,12 @@ class Performer
         return $this;
     }
 
+    /**
+     * Remove a concert.
+     *
+     * @param Concert $concert
+     * @return Performer
+     */
     public function removeConcert(Concert $concert): self
     {
         if ($this->concerts->contains($concert)) {
@@ -291,11 +305,22 @@ class Performer
         return $this;
     }
 
+    /**
+     * Getter for code.
+     *
+     * @return string|null
+     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
+    /**
+     * Setter for code.
+     *
+     * @param string $code
+     * @return Performer
+     */
     public function setCode(string $code): self
     {
         $this->code = $code;
@@ -303,11 +328,22 @@ class Performer
         return $this;
     }
 
+    /**
+     * Getter for image.
+     *
+     * @return string|null
+     */
     public function getImage(): ?string
     {
         return $this->image;
     }
 
+    /**
+     * Setter for image.
+     *
+     * @param string|null $image
+     * @return Performer
+     */
     public function setImage(?string $image): self
     {
         $this->image = $image;
@@ -315,6 +351,11 @@ class Performer
         return $this;
     }
 
+    /**
+     * ToString method.
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->stagename;

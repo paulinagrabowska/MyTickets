@@ -35,7 +35,6 @@
                 <td><a href="{{ url('performer_edit', {id: performer.id}) }}" class="btn btn-outline-info btn-sm m-2" >{{ 'action.edit'|trans }}</a>
                     {% if not performer.concerts|length %}
                         <a href="{{ url('performer_delete', {id: performer.id}) }}" class="btn btn-outline-danger btn-sm m-2">{{ 'action.delete'|trans }}</a>
-                        </a>
                     {% endif %}
                 </td>
             </tr>

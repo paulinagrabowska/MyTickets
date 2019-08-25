@@ -113,6 +113,7 @@ class UserController extends Controller
      * @param User $user
      * @param UserRepository $repository
      * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
      * @return Response
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -156,6 +157,8 @@ class UserController extends Controller
     }
 
     /**
+     * Show user's reservation list.
+     *
      * @param ReservationRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request

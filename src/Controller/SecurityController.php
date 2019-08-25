@@ -67,6 +67,8 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * Register a new user.
+     *
      * @param Request $request
      * @param UserRepository $repository
      * @param PasswordEncoderInterface $encoder
@@ -100,7 +102,6 @@ class SecurityController extends AbstractController
             $this->addFlash('success', 'message.registration_success');
 
             return $this->redirectToRoute('security_login');
-
         }
 
         return $this->render(

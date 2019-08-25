@@ -30,11 +30,17 @@ class FrontEndController extends Controller
      * Show list of concerts.
      *
      * @param ConcertRepository $repository
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
      * @Route("/", name="main_page")
      */
     public function index(ConcertRepository $repository, PaginatorInterface $paginator, Request $request)
     {
+        //getInt()
+        //Returns the parameter value converted to integer;
+        //$request->query - METODA GET
+        //$request->request - METODA POST
         $concerts = $paginator->paginate(
             $repository->queryAll(),
             $request->query->getInt('page', 1),
@@ -72,7 +78,7 @@ class FrontEndController extends Controller
      * @param PerformerRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @Route("/performer", name="performer_front_show")
      */
     public function performer(PerformerRepository $repository, PaginatorInterface $paginator, Request $request)
@@ -90,9 +96,9 @@ class FrontEndController extends Controller
     }
 
     /**
-     * View a performer.
+     * View a Performer.
      *
-     * @param Concert $concert
+     * @param Performer $performer
      * @return Response
      * @Route(
      *     "/performer/{id}",
@@ -109,31 +115,44 @@ class FrontEndController extends Controller
     }
 
     /**
-     * Make reservation.
+     * Make concert reservation.
      *
      * @param Request $request
      * @param ReservationRepository $repository
      * @return Response
-     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/reservation",
      *     methods={"GET", "POST"},
      *     name="reservation_add",
      * )
      */
-    public function addReservation(Request $request, ReservationRepository $repository , ConcertRepository $concertRepository): Response
+    public function addReservation(Request $request, ReservationRepository $repository): Response
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reservation->setUser($this->getUser());
-            $repository->save($reservation);
-            $this->addFlash('success', 'message.created_successfully');
+        //pobieramy dane dot. koncertu z formularza
+        $concert= $form['concert']->getData();
+        //sprawdzamy czy limit rezerwacji na koncert nie został przekroczony
+        if ($concert) {
+            $limit = $concert->getReservationLimit();
+            if ($limit > 0) {
+                if ($form->isSubmitted() && $form->isValid()) {
+                    //dump($limit); die;
+                    $reservation->setUser($this->getUser());
+                    $repository->save($reservation);
+                    $this->addFlash('success', 'message.created_successfully');
 
-            return $this->redirectToRoute('main_page');
+                    return $this->redirectToRoute('main_page');
+                }
+            } else {
+                $this->addFlash('warning', 'message.tickets_not_available');
+
+                return $this->redirectToRoute('main_page');
+            }
         }
 
         return $this->render(
@@ -143,7 +162,7 @@ class FrontEndController extends Controller
     }
 
     /**
-     * Make reservation.
+     * Make specific concert reservation.
      *
      * @param Request $request
      * @param ReservationRepository $repository
@@ -160,18 +179,26 @@ class FrontEndController extends Controller
      */
     public function addSpecificReservation(Concert $concert, Request $request, ReservationRepository $repository , ConcertRepository $concertRepository): Response
     {
+        $limit = $concert->getReservationLimit();
 
-        $reservation = new Reservation();
-        $form = $this->createForm(SpecificReservationType::class, $reservation);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reservation->setUser($this->getUser());
-            $reservation->setConcert($concert);
-            $repository->save($reservation);
-            $this->addFlash('success', 'message.created_successfully');
+         if ($limit > 0 ) {
+             $reservation = new Reservation();
+             $form = $this->createForm(SpecificReservationType::class, $reservation);
+             $form->handleRequest($request);
+             if ($form->isSubmitted() && $form->isValid()) {
+                 $reservation->setUser($this->getUser());
+                 $reservation->setConcert($concert);
+                 $repository->save($reservation);
+                 $this->addFlash('success', 'message.created_successfully');
 
-            return $this->redirectToRoute('main_page');
-        }
+                 return $this->redirectToRoute('main_page');
+             }
+         } else {
+             $this->addFlash('warning', 'message.tickets_not_available');
+
+             return $this->redirectToRoute('main_page');
+         }
+
 
         return $this->render(
             'front/reservation/add_specific.html.twig',
@@ -182,6 +209,8 @@ class FrontEndController extends Controller
 
 
     /**
+     * Concert search bar.
+     *
      * @param ConcertRepository $concertRepository
      * @param Request $request
      * @param PaginatorInterface $paginator

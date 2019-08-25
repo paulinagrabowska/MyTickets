@@ -60,6 +60,7 @@ class PerformerType extends AbstractType
                 [
                     'label' => 'label.image',
                     'mapped' => false,
+                    'required' => false,
                 ])
         ;
     }
