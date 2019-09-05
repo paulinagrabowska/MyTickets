@@ -31,7 +31,8 @@ class TagsDataTransformer implements DataTransformerInterface
         $this->repository = $repository;
     }
 
-    /*Przetworzenie tagów z encji, na wartosci tekstowe w formularzu oddzielone przecinkami*/
+    /*Przetworzenie tagów z encji, na wartosci tekstowe w formularzu oddzielone przecinkami
+    - działa ona podczas wypełniania formularza danymi pochodzącymi z encji.*/
 
     /**
      * Transform array of tags to string of names.
@@ -56,6 +57,10 @@ class TagsDataTransformer implements DataTransformerInterface
     }
 
 //    Przetworzenie tagów z formularza na obiekty
+//    - działa podczas uzupełniania encji Task danymi pochodzącymi z formularza
+//    - pobieramy z bazy danych tag na podstawie jego nazwy,
+//    - jeżeli tag istnieje dodajemy go do kolekcji,
+//    jeżeli nie dodajemy nowy tag do bazy danych, a następnie dodajemy go do kolekcji.
     /**
      * Transform string of tag names into array of Tag entities.
      *
@@ -73,6 +78,7 @@ class TagsDataTransformer implements DataTransformerInterface
         $tags = [];
 
         foreach ($tagTitles as $tagTitle) {
+            //trim - wycina białe znaki
             if ('' !== trim($tagTitle)) {
                 $tag = $this->repository->findOneByTitle(strtolower($tagTitle));
                 if (null == $tag) {

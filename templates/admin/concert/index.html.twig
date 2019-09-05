@@ -31,7 +31,7 @@
                     <td>{{ concert.id }}</td>
                     <td>{{ concert.name }}</td>
                     <td>{{ concert.info }}</td>
-                    <td>{{ concert.date|date('Y/m/d') }}</td>
+                    <td>{{ concert.date|localizeddate('short', 'none') }}</td>
                     <td>{{ concert.getReservationLimit()}}</td>
                     <td>{{ concert.performer.stagename}}</td>
                     <td>{{ concert.venue.name}}</td>

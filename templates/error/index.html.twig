@@ -3,12 +3,14 @@
 {% block title %}{{ 'title.access_denied'|trans }}{% endblock %}
 
 {% block body %}
+ <div class="container">
+  <hr>
+  <h1 class="text-danger text-center">{{ 'message.access_denied'|trans }}</h1>
+  <hr>
+  <div class="image m-auto text-center">
+   <img src="https://stickeroid.com/uploads/pic/fx0n217l-full/thumb/stickeroid_5bf56cdbecf88.png" class="card-img-top img-thumbnail rounded mx-auto d-block" style="height: 200px; width: 300px; display: block;" alt="">
+  </div>
 
- <hr>
- <h1 class="text-danger text-center">{{ 'message.access_denied'|trans }}</h1>
- <hr>
- <div class="image m-auto text-center">
-  <img src="https://stickeroid.com/uploads/pic/fx0n217l-full/thumb/stickeroid_5bf56cdbecf88.png" class="card-img-top img-thumbnail rounded mx-auto d-block" style="height: 200px; width: 300px; display: block;" alt="">
+  <a href="{{ path('main_page') }}" class="btn btn-outline-danger m-2">{{ 'action.back_to_list'|trans }}</a>
  </div>
-
 {% endblock %}

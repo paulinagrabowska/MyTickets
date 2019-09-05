@@ -369,6 +369,42 @@
                 <source>message.tickets_not_available</source>
                 <target>Brak biletów!</target>
             </trans-unit>
+            <trans-unit id="performer.view">
+                <source>performer.view</source>
+                <target>Informacje o wykonawcy</target>
+            </trans-unit>
+            <trans-unit id="message.form_error">
+                <source>message.form_error</source>
+                <target>Błąd formularza!</target>
+            </trans-unit>
+            <trans-unit id="message.registration_success">
+                <source>message.registration_success</source>
+                <target>Rejestracja zakończona sukcesem!</target>
+            </trans-unit>
+            <trans-unit id="Year">
+                <source>Year</source>
+                <target>Rok</target>
+            </trans-unit>
+            <trans-unit id="Month">
+                <source>Month</source>
+                <target>Miesiąc</target>
+            </trans-unit>
+            <trans-unit id="Day">
+                <source>Day</source>
+                <target>Dzień</target>
+            </trans-unit>
+            <trans-unit id="message.item_not_found">
+            <source>message.item_not_found</source>
+            <target>Nie znaleziono elementu!</target>
+            </trans-unit>
+            <trans-unit id="message.no_search_results">
+                <source>message.no_search_results</source>
+                <target>Brak wyników wyszukiwania!</target>
+            </trans-unit>
+            <trans-unit id="message.concert_has_reservations">
+                <source>message.concert_has_reservations</source>
+                <target>Brak wyników wyszukiwania!</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -13,8 +13,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class UserDataType
+ * @package App\Form
+ */
 class UserDataType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -43,9 +51,7 @@ class UserDataType extends AbstractType
                 DateType::class,
                 [
                     'label' => 'label.birthdate',
-                    'years' => range(date('Y')-50, date('Y')),
-                    'months' => range(date('m'), 12),
-                    'days' => range(date('d'), 31),
+                    'years' => range(date('Y')-50, date('Y')-16),
                     'required' => true,
                 ]
             )
@@ -59,6 +65,9 @@ class UserDataType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class FrontEndController
@@ -64,7 +65,7 @@ class FrontEndController extends Controller
      *     requirements={"id": "[1-9]\d*"},
      * )
      */
-    public function concert_view(Concert $concert): Response
+    public function concertView(Concert $concert): Response
     {
         return $this->render(
             'front/concert_view.html.twig',
@@ -128,6 +129,7 @@ class FrontEndController extends Controller
      *     methods={"GET", "POST"},
      *     name="reservation_add",
      * )
+     * @IsGranted("ROLE_USER")
      */
     public function addReservation(Request $request, ReservationRepository $repository): Response
     {
@@ -162,20 +164,21 @@ class FrontEndController extends Controller
     }
 
     /**
-     * Make specific concert reservation.
-     *
+     * @param Concert $concert
      * @param Request $request
      * @param ReservationRepository $repository
+     * @param ConcertRepository $concertRepository
      * @return Response
-     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/reservation/{id}",
      *     methods={"GET", "POST"},
      *     name="reservation_new",
      *     requirements={"id": "[1-9]\d*"},
      * )
+     * @IsGranted("ROLE_USER")
      */
     public function addSpecificReservation(Concert $concert, Request $request, ReservationRepository $repository , ConcertRepository $concertRepository): Response
     {
@@ -215,11 +218,11 @@ class FrontEndController extends Controller
      * @param Request $request
      * @param PaginatorInterface $paginator
      * @return Response
-     * @Route("/search-results", methods={"POST"}, name="search_results")
+     * @Route("/search-results", methods={"GET"}, name="search_results")
      */
     public function searchResults(ConcertRepository $concertRepository, Request $request, PaginatorInterface $paginator)
     {
-        $search_results = $concertRepository->search($request->request->get('search_value'));
+        $search_results = $concertRepository->search($request->query->get('search_value'));
 
         $concerts = $paginator->paginate(
             $search_results,

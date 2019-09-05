@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.performer_view'|trans({'%id%': performer.id|default('')}) }}
+    {{  performer.stagename }} - {{ 'title.performer_view'|trans }}
 {% endblock %}
 
 {% block body %}
@@ -9,24 +9,34 @@
         <h1 class="text-center text-info">{{ 'title.performer_view'|trans({'%id%': performer.id|default('')}) }}</h1>
         {% if performer is defined and performer|length %}
             <div class="list-group m-lg-2">
-                <a href="#" class="list-group-item list-group-item-action active">
+                <a href="#" class="list-group-item list-group-item-action active font-weight-bold text-uppercase disabled">
                     {{ 'label.stagename'|trans }}
                 </a>
-                <a href="#" class="list-group-item list-group-item-action disabled text-info font-weight-bold">{{  performer.stagename }}</a>
+                <a href="#" class="list-group-item list-group-item-action disabled text-info font-weight-bold ">{{  performer.stagename }}</a>
                 {% if performer.image != null %}
                     <a href="#" class="list-group-item list-group-item-action disabled">
                         <img class="card-img-top img-thumbnail rounded mx-auto d-block" style="height: 200px; width: 300px; display: block;" src="{{ asset('uploads/' ~ performer.image) }}">
                     </a>
                 {% endif %}
-                <a href="#" class="list-group-item list-group-item-action">{{ 'label.firstname'|trans }}</a>
+                <a href="#" class="list-group-item list-group-item-action font-weight-bold text-uppercase disabled text-primary">{{ 'label.firstname'|trans }}</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.firstname }}</a>
-                <a href="#" class="list-group-item list-group-item-action">{{ 'label.lastname'|trans }}</a>
+                <a href="#" class="list-group-item list-group-item-action font-weight-bold text-uppercase disabled text-primary">{{ 'label.lastname'|trans }}</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">{{ performer.lastname }}</a>
-                <a href="#" class="list-group-item list-group-item-action">{{ 'label.info'|trans }}</a>
+                <a href="#" class="list-group-item list-group-item-action font-weight-bold text-uppercase disabled text-primary">{{ 'label.info'|trans }}</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">{{  performer.info }}</a>
-                <a href="#" class="list-group-item list-group-item-action">{{ 'label.musicgenre'|trans }}</a>
+                <a href="#" class="list-group-item list-group-item-action font-weight-bold text-uppercase disabled text-primary">{{ 'label.musicgenre'|trans }}</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">{{  performer.musicgenre}}</a>
+                <a href="#" class="list-group-item list-group-item-action font-weight-bold text-uppercase disabled text-primary">{{ 'label.concerts'|trans }}</a>
+                {% for concert in performer.getConcerts() %}
+                    {% if concert != null %}
+                    <a href="{{ url('concert_view', {id: concert.id}) }}" class="list-group-item list-group-item-action">{{  concert }}</a>
+                    {% endif %}
+                    {% else %}
+                    <a href="#" class="list-group-item list-group-item-action">{{ 'message.empty_list'|trans }}</a>
+                {% endfor %}
+
             </div>
+
         {% else %}
             <p>
                 {% include 'default/_single_flash_message.html.twig' with {

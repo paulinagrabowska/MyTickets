@@ -6,8 +6,6 @@
 <div class="container-fluid center">
     <h1 class="text-center">{{ 'title.concert_list'|trans }}</h1>
     {% if concerts is defined and concerts|length %}
-
-
     <div class="navigation">
         {{ knp_pagination_render(concerts) }}
     </div>
@@ -20,6 +18,9 @@
                     <h4 class="card-title text-center">{{ concert.name }}</h4>
                     <p class="card-text">{{ concert.info }}</p>
                 </div>
+                {% if  concert.performer.image != null%}
+                    <img class="card-img-top img-thumbnail" src="{{ asset('uploads/' ~ concert.performer.image) }}">
+                {% endif %}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item text-center text-warning font-weight-bold text-uppercase">{{ concert.performer.stagename }}</li>
                 </ul>
@@ -31,22 +32,15 @@
                 </div>
                 <div class="card-footer text-muted text-center">
                     <a href="{{ url('reservation_new', {id: concert.id}) }}" class="btn btn-outline-warning btn-sm " title="{{ 'concert.view'|trans }}">
-                        {{ 'book.ticket'|trans }}
+                        {{ 'label.book_a_ticket'|trans }}
                     </a>
 
                 </div>
             </div>
         {% endfor %}
-
-
-
         <div class="navigation">
             {{ knp_pagination_render(concerts) }}
-        </div>
-
-
-
-        {% else %}
+        </div>        {% else %}
             <p>
                 {% include 'default/_single_flash_message.html.twig' with {
                     type: 'warning',
@@ -55,8 +49,5 @@
             </p>
         {% endif %}
     </div>
-
-
-
-    {% endblock %}
 </div>
+    {% endblock %}

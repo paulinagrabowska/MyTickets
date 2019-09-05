@@ -47,7 +47,7 @@ class UserController extends Controller
      *     subject="user",
      * )
      */
-    public function user_view(User $user)
+    public function userView(User $user)
     {
 //        if ($user !== $this->getUser()) {
 //            $this->addFlash('warning', 'message.item_not_found');

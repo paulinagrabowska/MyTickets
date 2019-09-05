@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.concert_view'|trans({'%id%': concert.id|default('')}) }}
+    {{ 'title.concert_view'|trans }} {{  concert.performer.stagename}}
 {% endblock %}
 
 {% block body %}
     <div class="container">
-    <h1 class="text-center text-warning">{{ 'title.concert_view'|trans({'%id%': concert.id|default('')}) }}</h1>
+{#    <h1 class="text-center text-warning">{{ 'title.concert_view'|trans({'%id%': concert.id|default('')}) }}</h1>#}
+        <h1 class="text-center text-warning">{{ 'title.concert_view'|trans }} {{  concert.performer.stagename}}</h1>
     {% if concert is defined and concert|length %}
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active">
+            <a href="#" class="list-group-item list-group-item-action active font-weight-bold text-uppercase disabled text-primary">
                 {{ 'label.name'|trans }}
             </a>
             <a href="#" class="list-group-item list-group-item-action disabled text-warning font-weight-bold">{{  concert.name }}</a>
@@ -18,13 +19,13 @@
                     <img class="card-img-top img-thumbnail rounded mx-auto d-block" style="height: 200px; width: 300px; display: block;" src="{{ asset('uploads/' ~ concert.performer.image) }}">
                 </a>
             {% endif %}
-            <a href="#" class="list-group-item list-group-item-action">{{ 'label.date'|trans }}</a>
+            <a href="#" class="list-group-item list-group-item-action font-weight-bold text-uppercase disabled text-primary">{{ 'label.date'|trans }}</a>
             <a href="#" class="list-group-item list-group-item-action disabled">{{ concert.date|date('Y/m/d') }}</a>
-            <a href="#" class="list-group-item list-group-item-action">{{ 'label.info'|trans }}</a>
+            <a href="#" class="list-group-item list-group-item-action font-weight-bold text-uppercase disabled text-primary">{{ 'label.info'|trans }}</a>
             <a href="#" class="list-group-item list-group-item-action disabled">{{  concert.info }}</a>
-            <a href="#" class="list-group-item list-group-item-action">{{ 'label.limit'|trans }}</a>
-            <a href="#" class="list-group-item list-group-item-action disabled">{{  concert.ReservationLimit}}</a>
-            <a href="#" class="list-group-item list-group-item-action">{{ 'label.performer_stagename'|trans }}</a>
+{#            <a href="#" class="list-group-item list-group-item-action">{{ 'label.limit'|trans }}</a>#}
+{#            <a href="#" class="list-group-item list-group-item-action disabled">{{  concert.ReservationLimit}}</a>#}
+            <a href="#" class="list-group-item list-group-item-action font-weight-bold text-uppercase disabled text-primary">{{ 'label.performer_stagename'|trans }}</a>
             <a href="{{ url('performer_view', {id: concert.performer.id}) }}" class="list-group-item list-group-item-action ">{{  concert.performer.stagename}}</a>
         </div>
     {% else %}

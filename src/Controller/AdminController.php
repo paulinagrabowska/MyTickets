@@ -204,6 +204,7 @@ class AdminController extends Controller
         $form = $this->createForm(PerformerType::class, $performer, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
+        //metoda isSubmitted() oczekuje danych, a my je usuwamy dlatego musimy wysłać formularz ręcznie
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));
         }
@@ -339,9 +340,15 @@ class AdminController extends Controller
      */
     public function deleteConcert(Request $request, Concert $concert, ConcertRepository $repository): Response
     {
+        if ($concert->getReservations()->count()) {
+            $this->addFlash('warning', 'message.concert_has_reservations');
+
+            return $this->redirectToRoute('concert_show');
+        }
 
         $form = $this->createForm(ConcertType::class, $concert, ['method' => 'DELETE']);
         $form->handleRequest($request);
+
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));
@@ -626,8 +633,6 @@ class AdminController extends Controller
 
     public function deleteTag(Request $request, Tag $tag, TagRepository $repository): Response
     {
-
-
         $form = $this->createForm(TagType::class, $tag, ['method' => 'DELETE']);
         $form->handleRequest($request);
 

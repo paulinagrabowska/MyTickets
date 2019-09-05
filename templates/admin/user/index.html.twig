@@ -36,7 +36,7 @@
                     </td>
                     <td>{{ user.firstName}}</td>
                     <td>{{ user.lastName}}</td>
-                    <td>{{ user.birthdate|date('Y/m/d') }}</td>
+                    <td>{{ user.birthdate|localizeddate('short', 'none') }}</td>
                     <td>{{ user.phone}}</td>
                     <td><a href="{{ url('user_promote', {id: user.id}) }}" class="btn btn-outline-info btn-sm m-2">{{ 'action.edit'|trans }}</a>
                     {% if not user.reservations|length %}

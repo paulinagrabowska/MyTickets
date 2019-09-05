@@ -43,7 +43,6 @@ class ConcertRepository extends ServiceEntityRepository
      * @param $value
      * @return \Doctrine\ORM\Query
      */
-
     public function search($value)
     {
         $qb = $this->getOrCreateQueryBuilder();

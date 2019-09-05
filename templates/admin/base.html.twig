@@ -19,9 +19,6 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
         <div class="sidebar-heading"> <a class="navbar-brand mr-1 font-weight-bold" href="{{ path('admin_main_page') }}">{{ 'title.admin_panel'|trans }}</a> </div>
         <div class="list-group list-group-flush">
-            <li class="list-group-item list-group-item-action bg-light text-uppercase font-weight-bold text-warning ">{{'label.users'|trans }}</li>
-            <a href="{{ path('user_show') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.show'|trans }} </a>
-
             <li class="list-group-item list-group-item-action bg-light text-uppercase font-weight-bold text-info ">{{'label.performers'|trans }}</li>
             <a href="{{ path('performer_add') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.add'|trans }}</a>
             <a href="{{ path('performer_show') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.show'|trans }} </a>
@@ -30,15 +27,22 @@
             <a href="{{ path('concert_add') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.add'|trans }}</a>
             <a href="{{ path('concert_show') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.show'|trans }} </a>
 
+            <li class="list-group-item list-group-item-action bg-light text-uppercase font-weight-bold text-info ">{{'label.venues'|trans }}</li>
+            <a href="{{ path('venue_add') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.add'|trans }}</a>
+            <a href="{{ path('venue_show') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.show'|trans }} </a>
+
             <li class="list-group-item list-group-item-action bg-light text-uppercase font-weight-bold text-info ">{{'label.tags'|trans }}</li>
             <a href="{{ path('tag_add') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.add'|trans }}</a>
             <a href="{{ path('tag_show') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.show'|trans }} </a>
 
-            <li class="list-group-item list-group-item-action bg-light text-uppercase font-weight-bold text-info ">{{'label.reservations'|trans }}</li>
+            <li class="list-group-item list-group-item-action bg-light text-uppercase font-weight-bold text-warning ">{{'label.users'|trans }}</li>
+            <a href="{{ path('user_show') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.show'|trans }} </a>
+
+            <li class="list-group-item list-group-item-action bg-light text-uppercase font-weight-bold text-warning ">{{'label.reservations'|trans }}</li>
             <a href="{{ path('reservation_show') }}" class="list-group-item list-group-item-action bg-light">{{ 'action.show'|trans }} </a>
+
         </div>
     </div>
-
 
     <!-- Page Content -->
     <div id="page-content-wrapper">

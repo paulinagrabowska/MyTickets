@@ -16,6 +16,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ConcertType
+ * @package App\Form
+ */
 class ConcertType extends AbstractType
 {
     /**
@@ -61,6 +65,7 @@ class ConcertType extends AbstractType
                 [
                     'label' => 'label.date',
                     'required' => true,
+                    'years' => range(date('Y'), date('Y')+2),
                 ])
             ->add('reservation_limit',
                 NumberType::class,
@@ -114,6 +119,9 @@ class ConcertType extends AbstractType
         );
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
